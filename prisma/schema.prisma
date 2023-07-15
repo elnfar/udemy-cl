@@ -19,4 +19,18 @@ model User {
     avatar String?
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+    course Course[]
+}
+
+model Course {
+    id String @id @default(uuid())
+    option String
+    title String
+    category String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId String 
+
+    @@index([userId])
 }
