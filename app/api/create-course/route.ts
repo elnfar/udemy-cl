@@ -15,13 +15,14 @@ export async function POST (
     }
     const body = await req.json();
 
-    const {option,title,category} = body;
+    const {option,title,category,videos} = body;
 
     const course = await prisma.course.create({
         data: {
             option,
             title,
             category,
+            videos,
             userId:user.id
         },
     })

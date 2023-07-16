@@ -1,155 +1,20 @@
-'use client'
+import React from 'react'
+import NewCourse from './(components)/create-course-form'
+import { prisma } from '@/lib/prisma'
+import myUser from '@/app/actions/getUser'
 
-import Box from '@/components/box'
-import { Button } from '@/components/ui/button'
-import { DropdownMenu } from '@/components/ui/dropdown-menu'
-import { Input } from '@/components/ui/input'
-import { DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu'
-import axios from 'axios'
-import { Text, VideoIcon } from 'lucide-react'
-import { ChangeEvent, useState } from 'react'
-import { toast } from 'react-hot-toast'
+export default async function page() {
 
-enum STEPS {
-    OPTION = 0,
-    TITLE = 1,
-    CATEGORY = 2,
-
-  }
-  
-
-export const categories = [
-    {
-      label: 'Course',
-      icon:<VideoIcon/>,
-      description: 'Create rich learning experiences with the help of video lectures, quizzes, coding exercises, etc.',
-    },
-    {
-      label: 'Practise Test',
-      icon:<Text/>,
-      description: 'Help students prepare for certification exams by providing practice questions.',
-    },
-    
-  ]
-
-  export const dropdownItems = [
-    {
-      label: 'Design',
-    },
-    {
-      label: 'Marketing',
-    },
-    {
-        label: 'Development',
-      },
-      {
-        label: 'Finance',
-      },
-      {
-        label: 'Film-making',
-      },
-    
-  ]
-  
-  
-
-const initialValues = {
-    option:'',
-    title:'',
-    category:''
-}
-
-
-export default function NewCourse() {
-
-    const [state,setState] = useState(initialValues)
-    const [steps,setSteps] = useState(STEPS.OPTION)
-
-
-
-    const onNext = () => {
-        setSteps((value) => value + 1)
+  const user = await myUser()
+  const course = await prisma.course.findFirst({
+    where: {
+      userId:user?.id
     }
+  })
 
-    const onBack = () => {
-        setSteps((value) => value - 1)
-    }
-
-
-    const onSubmit = () => {
-        if(steps !== STEPS.CATEGORY) {
-            return onNext()
-        }
-
-        axios.post('/api/create-course', state)
-        .then(() => {
-          toast.success('Course created successfully')
-    
-        })
-        .catch((err) => {
-          throw new Error(err)
-        })
-
-    }
-
-    function handleChange(event:ChangeEvent<HTMLInputElement>) {
-        setState({...state, [event.target.name]: event.target.value})
-    }
-    
-if (steps === STEPS.OPTION) {
   return (
-    <div className='flex items-center justify-center h-[90vh] flex-col gap-2'>
-        <div className='flex items-center gap-4'>
-        {categories.map(({label,description,icon}) => (
-          <Box key={label} icon={icon} label={label} desc={description} selected={state.option === label} onClick={() => {
-            setState({
-                ...state,
-                option:label
-            })
-          }}/>
-        ))}
-        </div>
-          <Button onClick={onSubmit} type='button'>Next</Button>
-    </div>
+    <main>
+      <NewCourse course={course}/>
+    </main>
   )
-    }
-
-    if(steps === STEPS.TITLE) {
-        return (
-            <div>
-                <div>
-                    <h1>Enter the title of your course</h1>
-                    <Input value={state.title} id='name' name='title' type='text' onChange={handleChange} className='h-12 w-[800px]'/>
-                    <Button onClick={onSubmit} type='button'>Next</Button>
-                    <Button onClick={onBack} type='button'>Back</Button>
-
-                </div>
-            </div>
-        )
-    }
-
-    if(steps === STEPS.CATEGORY) {
-        return (
-            <div>
-
-                {dropdownItems.map(({label}) => (
-                    <Box label={label} key={label} selected={state.category === label} onClick={() => {
-                        setState({
-                            ...state,
-                            category:label
-
-                        })
-                    }}/>
-                ))}
-               
-                <Button onClick={onSubmit} type='button'>Next</Button>
-                <Button onClick={onBack} type='button'>Back</Button>
-            </div>
-        )
-    }
-
-        return (
-            <div>
-            </div>
-        )
 }
