@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 interface IParams {
-    courseId?:any
+    courseId?:string
 }
 
 

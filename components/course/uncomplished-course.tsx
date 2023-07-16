@@ -28,7 +28,7 @@ export default function UncomplishedCourse({title,option,videos,category,id}:Unc
             <p>{category}</p>
             <p>{JSON.stringify(videos === null ? undefined : videos)}</p>
         </div>
-        <button onClick={() => router.push(`/teach-on-udemy/new-course/${id}/complete`)}>Complete</button>
+        <button onClick={() => router.push(`/teach-on-udemy/${id}`)}>Complete</button>
     </div>
   )
 }
