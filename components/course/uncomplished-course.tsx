@@ -8,11 +8,16 @@ interface UncCourse {
     title:string,
     option:string,
     category:string
+    videos:string | Object | null
 }
 
-export default function UncomplishedCourse({title,option,category,id}:UncCourse) {
+export default function UncomplishedCourse({title,option,videos,category,id}:UncCourse) {
 
   const router = useRouter()
+
+
+  console.log(videos);
+  
 
   return (
     <div>
@@ -21,6 +26,7 @@ export default function UncomplishedCourse({title,option,category,id}:UncCourse)
             <h2>{option}</h2>
             <h3>{title}</h3>
             <p>{category}</p>
+            <p>{JSON.stringify(videos === null ? undefined : videos)}</p>
         </div>
         <button onClick={() => router.push(`/teach-on-udemy/new-course/${id}/complete`)}>Complete</button>
     </div>

@@ -37,12 +37,13 @@ const TeachOnUdemy = ({courses}:CourseType) => {
         </div>
 
         <div className='flex items-center flex-col'>
-            {courses.map(({title,category,option,id}) => (
+            {courses.map(({title,category,option,id,videos}) => (
                 <UncomplishedCourse
                 title={title}
                 category={category}
                 option={option}
                 id={id}
+                videos={videos}
                 />
             ))}
         </div>
