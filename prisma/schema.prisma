@@ -26,12 +26,22 @@ model Course {
     id String @id @default(uuid())
     option String
     title String
-    videos  Json?
+    videos   Video[]
     category String
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
     user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId String 
-
     @@index([userId])
+}
+
+model Video {
+  id        String   @id @default(uuid())
+  url       String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  courseId  String
+  course    Course   @relation(fields: [courseId], references: [id])
+
+  @@index([courseId])
 }

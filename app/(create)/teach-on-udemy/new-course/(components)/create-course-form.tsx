@@ -3,7 +3,7 @@
 import Box from '@/components/box'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Course } from '@prisma/client'
+import { Course,Video } from '@prisma/client'
 import axios from 'axios'
 import { Text, VideoIcon } from 'lucide-react'
 import {useParams, useRouter} from 'next/navigation'
@@ -14,6 +14,7 @@ enum STEPS {
     OPTION = 0,
     TITLE = 1,
     CATEGORY = 2,
+    CONTENT = 3,
 
   }
   
@@ -52,19 +53,19 @@ export const categories = [
   ]
   
   
-interface initialValueProps {
-  option:string,
+  type Ival = {
+    option:string,
     title:string,
     category:string,
-    videos?:string[]
-}
+    videos:string[]
+  }
 
-const initialValues:initialValueProps = {
+const initialValues:Ival = {
     option:'',
     title:'',
     category:'',
+    videos:[]
 }
-
 
 export default function NewCourse({course}:any) {
 
@@ -84,11 +85,13 @@ export default function NewCourse({course}:any) {
 
 
     const onSubmit = () => {
-        if(steps !== STEPS.CATEGORY) {
+        if(steps !== STEPS.CONTENT) {
             return onNext()
         }
+        console.log(state);
         setIsLoading(true)
         axios.post('/api/create-course', state)
+        
         .then(() => {
           toast.success('Course created successfully')
           router.push('/teach-on-udemy')
@@ -98,12 +101,25 @@ export default function NewCourse({course}:any) {
         })
         .finally(() => {
             setIsLoading(false)
+            console.log(state);
+     
         })
-
+        console.log(state);
     }
 
     function handleChange(event:ChangeEvent<HTMLInputElement>) {
-        setState({...state, [event.target.name]: event.target.value})
+      const { name, value } = event.target;
+      if (name === 'videos') {
+        setState((prevState) => ({
+          ...prevState,
+          videos: value.split(',').map((url) => url.trim())
+        }));
+      } else {
+        setState((prevState) => ({
+          ...prevState,
+          [name]: value
+        }));
+      }
     }
     
 if (steps === STEPS.OPTION) {
@@ -159,6 +175,17 @@ if (steps === STEPS.OPTION) {
             </div>
         )
     }
+    
+    if(steps === STEPS.CONTENT) {
+      return (
+          <div className='flex flex-col items-center h-screen'>
+              <Input value={state.videos} id='videos' name='videos' type="text"  onChange={handleChange} className='h-12 w-[800px]'/>
+              <Button disabled={isLoading} onClick={onSubmit} type='button'>Next</Button>
+              <Button onClick={onBack} type='button'>Back</Button>
+          </div>
+      )
+  }
+
 
         return (
             <div>

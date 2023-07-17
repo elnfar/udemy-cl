@@ -1,4 +1,5 @@
 
+import { Video } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 
@@ -8,15 +9,14 @@ interface UncCourse {
     title:string,
     option:string,
     category:string
-    videos:string | Object | null
+    videos:string
 }
 
-export default function UncomplishedCourse({title,option,videos,category,id}:UncCourse) {
+export default function UncomplishedCourse({title,option,category,videos,id}:UncCourse) {
 
   const router = useRouter()
 
 
-  console.log(videos);
   
 
   return (
@@ -26,7 +26,7 @@ export default function UncomplishedCourse({title,option,videos,category,id}:Unc
             <h2>{option}</h2>
             <h3>{title}</h3>
             <p>{category}</p>
-            <p>{JSON.stringify(videos === null ? undefined : videos)}</p>
+            <p>{videos}</p>
         </div>
         <button onClick={() => router.push(`/teach-on-udemy/${id}`)}>Complete</button>
     </div>

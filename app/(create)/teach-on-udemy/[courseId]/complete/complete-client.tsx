@@ -20,14 +20,15 @@ type Pp = {
   courseId:string
 }
 
-export default function CompleteClient({courseId}:any) {
+export default function CompleteClient({courseId,params}:any) {
 
     const [state,setState] = useState(initialValues)
     const [isLoading, setIsLoading] = useState(false)
     const router = useRouter();
 
 
-
+  console.log('this is params',params);
+  
 
     const onSubmit = (e:any) => {
 
@@ -51,7 +52,7 @@ export default function CompleteClient({courseId}:any) {
     function handleChange(event:ChangeEvent<HTMLInputElement>) {
         setState({...state, [event.target.name]: event.target.value})
     }
-    
+  
   return (
     <div className='flex items-center justify-center h-[90vh] flex-col gap-2'>
         <form className='flex items-center gap-4' onSubmit={onSubmit}>

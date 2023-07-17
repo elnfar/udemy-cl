@@ -15,7 +15,9 @@ export default async function page() {
 
   return (
     <main>
-        <TeachOnUdemy courses={courses}/>
+
+      {courses ? <TeachOnUdemy courses={courses}/> : 'Course not found'}
+        
     </main>
   )
 }

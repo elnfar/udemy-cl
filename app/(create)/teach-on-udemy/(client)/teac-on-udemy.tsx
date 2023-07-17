@@ -4,7 +4,7 @@ import UncomplishedCourse from '@/components/course/uncomplished-course'
 import { Button } from '@/components/ui/button'
 import { ComboboxDemo } from '@/components/ui/dropdown'
 import { Input } from '@/components/ui/input'
-import { Course } from '@prisma/client'
+import { Course,Video } from '@prisma/client'
 import { SearchIcon } from 'lucide-react'
 import {useRouter} from 'next/navigation'
 

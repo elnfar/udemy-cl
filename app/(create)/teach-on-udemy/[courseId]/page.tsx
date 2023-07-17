@@ -11,10 +11,11 @@ export default async function page({params} : {params:IParams}) {
 
 
   const courses = await getCourseById(params)
-
+  console.log('this is params from page[courseId]',params);
+  
   return (
     <div>
-      <CompleteClient courseId={courses?.id}/>
+      <CompleteClient courseId={courses?.id} params={params}/>
     </div>
   )
 }

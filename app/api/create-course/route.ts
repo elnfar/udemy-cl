@@ -22,9 +22,13 @@ export async function POST (
             option,
             title,
             category,
-            videos,
+            videos: {
+                create: videos.map((url: string) => ({url})),
+            },
             userId:user.id
         },
     })
+    console.log(course);
+    
     return NextResponse.json(course)
 }

@@ -8,10 +8,7 @@ interface IParams {
 export default async function getCourseById(
     params:IParams
 ) {
-
-
     try {
-
         const {courseId} = params
 
         const course = await prisma.course.findUnique({
