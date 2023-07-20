@@ -7,8 +7,15 @@ import { Course,Video } from '@prisma/client'
 import axios from 'axios'
 import { Text, VideoIcon } from 'lucide-react'
 import {useParams, useRouter} from 'next/navigation'
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
+import Basic from './dropzone'
+
+import { UploadButton } from "../../../../../lib/uploadthings";
+
+
+
+
 
 enum STEPS {
     OPTION = 0,
@@ -18,6 +25,8 @@ enum STEPS {
 
   }
   
+
+
 
 export const categories = [
     {
@@ -56,6 +65,7 @@ export const categories = [
   type Ival = {
     option:string,
     title:string,
+    images:string[],
     category:string,
     videos:string[]
   }
@@ -63,15 +73,30 @@ export const categories = [
 const initialValues:Ival = {
     option:'',
     title:'',
+    images:[],
     category:'',
     videos:[]
 }
 
-export default function NewCourse({course}:any) {
+
+
+export default function NewCourse({course,courseVideos}:any) {
 
     const [state,setState] = useState(initialValues)
+    const [video,setVideo] = useState<{
+      fileUrl: string;
+      fileKey: string;
+  }[]>([])
+
+  const [image,setImage] = useState<{
+    fileUrl: string;
+    fileKey: string;
+}[]>([])
+
     const [isLoading, setIsLoading] = useState(false)
     const [steps,setSteps] = useState(STEPS.OPTION)
+    const [error, updateError] = useState();
+
     const router = useRouter();
     const params = useParams()
 
@@ -84,13 +109,18 @@ export default function NewCourse({course}:any) {
     }
 
 
+
     const onSubmit = () => {
         if(steps !== STEPS.CONTENT) {
             return onNext()
         }
         console.log(state);
         setIsLoading(true)
-        axios.post('/api/create-course', state)
+        axios.post('/api/create-course', {
+          ...state,
+          images:image.map((item) =>  item.fileUrl),
+          videos:video.map((item) => item.fileUrl)
+        })
         
         .then(() => {
           toast.success('Course created successfully')
@@ -107,20 +137,11 @@ export default function NewCourse({course}:any) {
         console.log(state);
     }
 
-    function handleChange(event:ChangeEvent<HTMLInputElement>) {
-      const { name, value } = event.target;
-      if (name === 'videos') {
-        setState((prevState) => ({
-          ...prevState,
-          videos: value.split(',').map((url) => url.trim())
-        }));
-      } else {
-        setState((prevState) => ({
-          ...prevState,
-          [name]: value
-        }));
-      }
+    function handleChange(event: ChangeEvent<HTMLInputElement>) {
+      setState({
+        ...state,[event.target.name]:event.target.value})
     }
+
     
 if (steps === STEPS.OPTION) {
   return (
@@ -145,7 +166,7 @@ if (steps === STEPS.OPTION) {
             <div>
                 <div>
                     <h1>Enter the title of your course</h1>
-                    <Input value={state.title} id='name' name='title' type='text' onChange={handleChange} className='h-12 w-[800px]'/>
+                    <Input value={state.title} id='name' name='title' type='text' onChange={handleChange} className='h-12 w-[800px]'/> 
                     <Button onClick={onSubmit} type='button'>Next</Button>
                     <Button onClick={onBack} type='button'>Back</Button>
 
@@ -179,9 +200,60 @@ if (steps === STEPS.OPTION) {
     if(steps === STEPS.CONTENT) {
       return (
           <div className='flex flex-col items-center h-screen'>
-              <Input value={state.videos} id='videos' name='videos' type="text"  onChange={handleChange} className='h-12 w-[800px]'/>
+
+              <UploadButton
+                endpoint="imageUploader"
+                onClientUploadComplete={(res) => {
+                  // Do something with the response
+                  if(res) {
+                    setImage(res)
+                    const json = JSON.stringify(res);
+
+                    console.log(json);
+                    console.log(image);
+                    console.log(state);
+                    
+                    
+                  }
+                  console.log("Files: ", res);
+                  alert("Upload Completed");
+                }}
+                onUploadError={(error: Error) => {
+                  // Do something with the error.
+                  alert(`ERROR! ${error.message}`);
+                }}
+              />
+
+
+              <UploadButton
+                endpoint="imageUploader"
+                onClientUploadComplete={(res) => {
+                  // Do something with the response
+                  if(res) {
+                    setVideo(res)
+
+                    const json = JSON.stringify(res);
+                    console.log(json);
+                    console.log(video);
+                    
+                  }
+                  console.log("Files: ", res);
+                  alert("Upload Completed");
+                }}
+                onUploadError={(error: Error) => {
+                  // Do something with the error.
+                  alert(`ERROR! ${error.message}`);
+                }}
+              />
+
+  
+
               <Button disabled={isLoading} onClick={onSubmit} type='button'>Next</Button>
               <Button onClick={onBack} type='button'>Back</Button>
+
+
+
+
           </div>
       )
   }

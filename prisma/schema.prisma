@@ -27,6 +27,7 @@ model Course {
     option String
     title String
     videos   Video[]
+    images Images[]
     category String
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -36,6 +37,17 @@ model Course {
 }
 
 model Video {
+  id        String   @id @default(uuid())
+  url       String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  courseId  String
+  course    Course   @relation(fields: [courseId], references: [id])
+
+  @@index([courseId])
+}
+
+model Images {
   id        String   @id @default(uuid())
   url       String
   createdAt DateTime @default(now())

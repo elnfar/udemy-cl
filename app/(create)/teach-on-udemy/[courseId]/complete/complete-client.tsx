@@ -4,6 +4,7 @@ import Box from '@/components/box'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Course } from '@prisma/client'
+import { UploadButton } from '@/lib/uploadthings'
 import axios from 'axios'
 import { Text, VideoIcon } from 'lucide-react'
 import {useParams, useRouter} from 'next/navigation'
@@ -23,6 +24,10 @@ type Pp = {
 export default function CompleteClient({courseId,params}:any) {
 
     const [state,setState] = useState(initialValues)
+    const [videos,setVideos] = useState<{
+      fileUrl: string;
+      fileKey: string;
+  }[]>([])
     const [isLoading, setIsLoading] = useState(false)
     const router = useRouter();
 
@@ -35,7 +40,7 @@ export default function CompleteClient({courseId,params}:any) {
         e.preventDefault();
 
         setIsLoading(true)
-        axios.put(`/api/${courseId}`, state)
+        axios.put(`/api/${courseId}`, videos)
         .then(() => {
           toast.success('Course created successfully')
           router.push('/teach-on-udemy')
@@ -55,11 +60,9 @@ export default function CompleteClient({courseId,params}:any) {
   
   return (
     <div className='flex items-center justify-center h-[90vh] flex-col gap-2'>
-        <form className='flex items-center gap-4' onSubmit={onSubmit}>
-            <Input value={state.videos} type='text' onChange={handleChange} name='videos'/>
-            <Button disabled={isLoading} type='submit'>Next</Button>
-        </form>
-      
+
+
+
     </div>
   )
     }

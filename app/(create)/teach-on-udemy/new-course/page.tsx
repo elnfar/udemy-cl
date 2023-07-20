@@ -12,9 +12,10 @@ export default async function page() {
     }
   })
 
+
   return (
     <main>
-      <NewCourse course={course}/>
+      <NewCourse course={course} />
     </main>
   )
 }

@@ -15,20 +15,35 @@ export async function POST (
     }
     const body = await req.json();
 
-    const {option,title,category,videos} = body;
+    const {option,title,category,videos,images} = body;
+
+    const imgData = images.map((url:string) => ({url}));
+    const videosData = videos.map((url: string) => ({ url }));
 
     const course = await prisma.course.create({
         data: {
             option,
             title,
+                 
             category,
-            videos: {
-                create: videos.map((url: string) => ({url})),
+            images:{
+                create:imgData
             },
+            videos:{
+                create:videosData
+            },
+        
             userId:user.id
+        },
+        select: {
+            id:true,
+            videos:true,
+            images:true
         },
     })
     console.log(course);
     
     return NextResponse.json(course)
 }
+
+// 
