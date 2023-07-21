@@ -2,7 +2,12 @@ import { prisma } from "@/lib/prisma";
 import myUser from "./actions/getUser";
 import UncomplishedCourse from "@/app/uncomplished-course";
 import TeachOnUdemy from "./(create)/teach-on-udemy/new-course/(components)/teach-udemy";
+import SliderMain from "./home-slider";
 
+const images = [
+  "/a.jpg",
+  "/b.jpg",
+];
 
 
 export default async function Home() {
@@ -21,11 +26,13 @@ export default async function Home() {
     })
 
   return (
-    <main className="flex items-center flex-wrap">
+    <main>
+      <SliderMain images={images}/>
+      <div className="flex items-center flex-wrap">
       {courses.map((item) => (
         <TeachOnUdemy images={item.images} title={item.title} option={item.option} />
       ))}
-
+      </div>  
     </main>
   )
 }
