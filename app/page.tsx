@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import myUser from "./actions/getUser";
 import UncomplishedCourse from "@/app/uncomplished-course";
+import TeachOnUdemy from "./(create)/teach-on-udemy/new-course/(components)/teach-udemy";
 
 
 
@@ -12,16 +13,17 @@ export default async function Home() {
 
 
     const courses = await prisma.course.findMany({
-        where: {
-            userId:user?.id,
+        include: {
+          videos:true,
+          images:true
         },
         
     })
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="flex items-center flex-wrap">
       {courses.map((item) => (
-      <UncomplishedCourse img={''} id={item.id} title={item.title} option={item.option} category={item.category} />
+        <TeachOnUdemy images={item.images} title={item.title} option={item.option} />
       ))}
 
     </main>

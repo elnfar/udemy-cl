@@ -80,7 +80,7 @@ const initialValues:Ival = {
 
 
 
-export default function NewCourse({course,courseVideos}:any) {
+export default function NewCourse() {
 
     const [state,setState] = useState(initialValues)
     const [video,setVideo] = useState<{
