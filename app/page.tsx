@@ -30,7 +30,7 @@ export default async function Home() {
       <SliderMain images={images}/>
       <div className="flex items-center flex-wrap">
       {courses.map((item) => (
-        <TeachOnUdemy images={item.images} title={item.title} option={item.option} />
+        <TeachOnUdemy id={item.id} images={item.images} title={item.title} option={item.option} />
       ))}
       </div>  
     </main>

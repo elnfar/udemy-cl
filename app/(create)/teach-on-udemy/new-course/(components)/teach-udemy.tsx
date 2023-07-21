@@ -1,8 +1,8 @@
-import { Button } from '@/components/ui/button'
-import { ComboboxDemo } from '@/components/ui/dropdown'
-import { DropdownMenu } from '@/components/ui/dropdown-menu'
+'use client'
+
 import { Course, Images } from '@prisma/client'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 
 
@@ -10,11 +10,15 @@ type TeachOnUdemy = {
     title:string,
     images: Images[],
     option:string
+    id:string
 }
 
-export default function TeachOnUdemy({title,images,option}:TeachOnUdemy) {
+export default function TeachOnUdemy({title,id,images,option}:TeachOnUdemy) {
+
+    const router = useRouter()
+
   return (
-    <div className='py-4'>
+    <div className='py-4 cursor-pointer' onClick={() => router.push(`/${id}`)}>
 
         <div className='mx-4 p-4'>
             <div className='w-[300px]'>
