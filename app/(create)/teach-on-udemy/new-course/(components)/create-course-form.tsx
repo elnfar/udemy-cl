@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Course,Video } from '@prisma/client'
 import axios from 'axios'
-import { Text, VideoIcon } from 'lucide-react'
+import { Circle, CircleDashed, Dot, DotIcon, Text, VideoIcon } from 'lucide-react'
 import {useParams, useRouter} from 'next/navigation'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
@@ -56,7 +56,10 @@ export const categories = [
         label: 'Finance',
       },
       {
-        label: 'Film-making',
+        label: 'Film Making',
+      },
+      {
+        label: 'Health',
       },
     
   ]
@@ -145,43 +148,74 @@ export default function NewCourse() {
         ...state,[event.target.name]:event.target.value})
     }
 
-    
-if (steps === STEPS.OPTION) {
-  return (
-    <div className='flex items-center justify-center h-[90vh] flex-col gap-2'>
-        <div className='flex items-center gap-4'>
-        {categories.map(({label,description,icon}) => (
-          <Box key={label} icon={icon} label={label} desc={description} selected={state.option === label} onClick={() => {
-            setState({
-                ...state,
-                option:label
-            })
-          }}/>
-        ))}
+    const links = [
+      {
+        name: "Course Type",
+        step: STEPS.OPTION,
+      },
+      {
+        name: "Course Title",
+        step: STEPS.TITLE,
+      },
+      {
+        name: "Course Category",
+        step: STEPS.CATEGORY,
+      },
+      {
+        name: "Course Content",
+        step: STEPS.CONTENT,
+      },
+    ];
+  
+return (
+  <>
+  <div className='flex items-center space-x-8 w-full py-4 bg-purple-600 text-white uppercase text-md font-bold justify-center'>
+      {links.map((item) => (
+        <span key={item.name} className={`flex w-[200px] items-center gap-2 cursor-pointer`}>
+           <span className={``} onClick={() => setSteps(item.step)}>{item.name}</span>
+           <Circle color="#ffffff" strokeWidth={2} className={`rounded-full ${steps === item.step ? 'bg-green-400' : ''}`}/>
+        </span>
+      ))}
+  </div>
+
+    {steps === STEPS.OPTION && ( 
+        <div className='flex items-center justify-center flex-col gap-4 h-[80vh]'>
+            <div className='flex items-center gap-4'>
+            {categories.map(({label,description,icon}) => (
+              <Box key={label} icon={icon} label={label} desc={description} selected={state.option === label} onClick={() => {
+                setState({
+                    ...state,
+                    option:label
+                })
+              }}/>
+            ))}
+            </div>
+            <div className='w-[200px]'>
+              <Button onClick={onSubmit} type='button' className='bg-purple-600 py-4 w-full'>Next</Button>
+            </div>
         </div>
-          <Button onClick={onSubmit} type='button'>Next</Button>
-    </div>
-  )
-    }
+    )}
 
-    if(steps === STEPS.TITLE) {
-        return (
-            <div>
-                <div>
-                    <h1>Enter the title of your course</h1>
-                    <Input value={state.title} id='name' name='title' type='text' onChange={handleChange} className='h-12 w-[800px]'/> 
-                    <Button onClick={onSubmit} type='button'>Next</Button>
+    {steps === STEPS.TITLE && (
+            <div className='h-[70vh] justify-center flex items-center'>
+                <div className='flex items-center flex-col gap-4'>
+                  <div className='space-y-4'>
+                    <h1 className='text-3xl'>Enter the title of your course</h1>
+                    <Input value={state.title} placeholder='Javascript course e.g' id='name' name='title' type='text' onChange={handleChange} className='h-12 w-[800px]'/> 
+                  </div>
+
+                    <div className='flex flex-col gap-2 w-full'>
                     <Button onClick={onBack} type='button'>Back</Button>
-
+                    <Button onClick={onSubmit} type='button' className='bg-purple-600'>Next</Button>
+                    </div>
                 </div>
             </div>
-        )
-    }
+    )} 
 
-    if(steps === STEPS.CATEGORY) {
-        return (
-            <div className='flex flex-col items-center h-screen'>
-                <div className='flex flex-wrap justify-center items-center h-[90vh]'>
+    {steps === STEPS.CATEGORY && ( 
+
+            <div className='flex flex-col items-center py-8 gap-2'>
+                <div className='grid grid-cols-3 gap-2'>
                 {dropdownItems.map(({label}) => (
                     <Box label={label} key={label} selected={state.category === label} onClick={() => {
                         setState({
@@ -191,18 +225,18 @@ if (steps === STEPS.OPTION) {
                         })
                     }}/>
                 ))}
-               </div>
-               <div className='flex items-center space-x-2'>
-                <Button disabled={isLoading} onClick={onSubmit} type='button'>Next</Button>
-                <Button onClick={onBack} type='button'>Back</Button>
                 </div>
+                <div className='flex gap-2'>
+                    <Button onClick={onBack} type='button'>Back</Button>
+                    <Button onClick={onSubmit} type='button' className='bg-purple-600'>Next</Button>
+                </div>
+               
             </div>
-        )
-    }
+    )}
     
-    if(steps === STEPS.CONTENT) {
-      return (
-          <div className='flex flex-col items-center h-screen'>
+    {steps === STEPS.CONTENT && (
+
+          <div className='flex flex-col items-center h-[70vh] justify-center'>
 
               <UploadButton
                 endpoint="imageUploader"
@@ -255,16 +289,8 @@ if (steps === STEPS.OPTION) {
               )}
               <Button onClick={onBack} type='button'>Back</Button>
 
-
-
-
           </div>
-      )
-  }
-
-
-        return (
-            <div>
-            </div>
-        )
-}
+      )} 
+    </>
+)
+              }

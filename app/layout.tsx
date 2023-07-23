@@ -7,6 +7,8 @@ import { getUserSession } from '@/lib/auth'
 import { TProvider } from '@/providers/toast-provider'
 import { prisma } from '@/lib/prisma'
 import myUser from './actions/getUser'
+import "@uploadthing/react/styles.css";
+
 
 const inter = Inter({ subsets: ['latin'] })
 

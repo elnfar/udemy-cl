@@ -3,6 +3,7 @@
 import { Course, Images } from '@prisma/client'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 
 
@@ -16,6 +17,7 @@ type TeachOnUdemy = {
 export default function TeachOnUdemy({title,id,images,option}:TeachOnUdemy) {
 
     const router = useRouter()
+
 
   return (
     <div className='py-4 cursor-pointer' onClick={() => router.push(`/${id}`)}>

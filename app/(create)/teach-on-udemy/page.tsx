@@ -40,7 +40,10 @@ export default async function page() {
 
 
 
-        </div>
+        </div>  
+
+    <div className="container p-12">
+          <h1 className="mx-4 text-3xl">Your courses as an instructor</h1>
 
             {courses.map((item) => (
                 <TeachOnUdemy 
@@ -50,6 +53,7 @@ export default async function page() {
                 title={item.title}
                 />
             ))}
+      </div>
     </div>
   )
 }
