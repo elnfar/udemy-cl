@@ -5,6 +5,8 @@ import { Inter } from 'next/font/google'
 import { getServerSession } from 'next-auth'
 import { getUserSession } from '@/lib/auth'
 import { TProvider } from '@/providers/toast-provider'
+import { prisma } from '@/lib/prisma'
+import myUser from './actions/getUser'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,14 +21,20 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
 
-  const user =  await getUserSession();
+  const user =  await myUser();
   console.log(user);
-  
+
+  const courses = await prisma.course.findMany({
+    where: {
+        userId:user?.id
+    }
+  })
+
   return (
     <html lang="en">
       <body className={inter.className}>
         <TProvider/>
-        <Navbar user={user}/>
+        <Navbar user={user} length={courses.length}/>
         {children}
         </body>
     </html>

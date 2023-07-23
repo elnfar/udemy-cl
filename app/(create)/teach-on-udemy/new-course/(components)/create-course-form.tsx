@@ -94,6 +94,9 @@ export default function NewCourse() {
 }[]>([])
 
     const [isLoading, setIsLoading] = useState(false)
+    const [isImageUploaded,setIsImageUploaded] = useState(true)
+    const [isVideoUploaded,setIsVideoUploaded] = useState(true)
+
     const [steps,setSteps] = useState(STEPS.OPTION)
     const [error, updateError] = useState();
 
@@ -216,7 +219,7 @@ if (steps === STEPS.OPTION) {
                     
                   }
                   console.log("Files: ", res);
-                  alert("Upload Completed");
+                  setIsImageUploaded(false)
                 }}
                 onUploadError={(error: Error) => {
                   // Do something with the error.
@@ -238,7 +241,7 @@ if (steps === STEPS.OPTION) {
                     
                   }
                   console.log("Files: ", res);
-                  alert("Upload Completed");
+                  setIsVideoUploaded(false)
                 }}
                 onUploadError={(error: Error) => {
                   // Do something with the error.
@@ -247,8 +250,9 @@ if (steps === STEPS.OPTION) {
               />
 
   
-
+              {!isVideoUploaded && !isImageUploaded &&  (
               <Button disabled={isLoading} onClick={onSubmit} type='button'>Next</Button>
+              )}
               <Button onClick={onBack} type='button'>Back</Button>
 
 

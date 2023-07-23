@@ -14,8 +14,8 @@ export default async function page() {
 
 
   return (
-    <main>
+    <div>
       <NewCourse />
-    </main>
+    </div>
   )
 }

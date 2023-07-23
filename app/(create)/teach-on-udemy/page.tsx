@@ -44,8 +44,8 @@ export default async function page() {
 
             {courses.map((item) => (
                 <TeachOnUdemy 
-                id={item.id}
                 images={item.images}
+                id={item.id}
                 option={item.option}
                 title={item.title}
                 />
