@@ -15,7 +15,7 @@ export async function POST (
     }
     const body = await req.json();
 
-    const {option,title,category,videos,images} = body;
+    const {option,title,category,videos,images,language,description} = body;
 
     const imgData = images.map((url:string) => ({url}));
     const videosData = videos.map((url: string) => ({ url }));
@@ -24,7 +24,8 @@ export async function POST (
         data: {
             option,
             title,
-                 
+            language,
+            description,
             category,
             images:{
                 create:imgData

@@ -20,7 +20,7 @@ export default function TeachOnUdemy({title,id,images,option}:TeachOnUdemy) {
 
 
   return (
-    <div className='py-4 cursor-pointer' onClick={() => router.push(`/${id}`)}>
+    <div className='py-4 cursor-pointer' onClick={() => router.push(`/course/${id}`)}>
 
         <div className='mx-4 p-4'>
             <div className='w-[300px]'>

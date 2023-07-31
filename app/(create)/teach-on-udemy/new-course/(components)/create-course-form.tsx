@@ -20,8 +20,10 @@ import { UploadButton } from "../../../../../lib/uploadthings";
 enum STEPS {
     OPTION = 0,
     TITLE = 1,
-    CATEGORY = 2,
-    CONTENT = 3,
+    DESCRIPTION = 2,
+    LANGUAGE = 3,
+    CATEGORY = 4,
+    CONTENT = 5,
 
   }
   
@@ -63,12 +65,38 @@ export const categories = [
       },
     
   ]
+
+
+  export const languages = [
+    {
+      label: 'English',
+    },
+    {
+      label: 'Arabic',
+    },
+    {
+        label: 'German',
+      },
+      {
+        label: 'French',
+      },
+      {
+        label: 'Russian',
+      },
+      {
+        label: 'Turkish',
+      },
+    
+  ]
+  
   
   
   type Ival = {
     option:string,
     title:string,
     images:string[],
+    description:string,
+    language:string,
     category:string,
     videos:string[]
   }
@@ -76,6 +104,8 @@ export const categories = [
 const initialValues:Ival = {
     option:'',
     title:'',
+    description:'',
+    language:'',
     images:[],
     category:'',
     videos:[]
@@ -104,7 +134,6 @@ export default function NewCourse() {
     const [error, updateError] = useState();
 
     const router = useRouter();
-    const params = useParams()
 
     const onNext = () => {
         setSteps((value) => value + 1)
@@ -158,6 +187,14 @@ export default function NewCourse() {
         step: STEPS.TITLE,
       },
       {
+        name: "Course Description",
+        step: STEPS.DESCRIPTION,
+      },
+      {
+        name: "Course Language",
+        step: STEPS.LANGUAGE,
+      },
+      {
         name: "Course Category",
         step: STEPS.CATEGORY,
       },
@@ -172,7 +209,7 @@ return (
   <div className='flex items-center space-x-8 w-full py-4 bg-purple-600 text-white uppercase text-md font-bold justify-center'>
       {links.map((item) => (
         <span key={item.name} className={`flex w-[200px] items-center gap-2 cursor-pointer`}>
-           <span className={``} onClick={() => setSteps(item.step)}>{item.name}</span>
+           <span className={`text-sm`} onClick={() => setSteps(item.step)}>{item.name}</span>
            <Circle color="#ffffff" strokeWidth={2} className={`rounded-full ${steps === item.step ? 'bg-green-400' : ''}`}/>
         </span>
       ))}
@@ -212,6 +249,23 @@ return (
             </div>
     )} 
 
+{steps === STEPS.DESCRIPTION && (
+            <div className='h-[70vh] justify-center flex items-center'>
+                <div className='flex items-center flex-col gap-4'>
+                  <div className='space-y-4'>
+                    <h1 className='text-3xl'>Enter the description of your course</h1>
+                    <Input value={state.description} placeholder='Learn typescript from scratch 2023' id='description' name='description' type='text' onChange={handleChange} className='h-12 w-[800px]'/> 
+                  </div>
+
+                    <div className='flex flex-col gap-2 w-full'>
+                    <Button onClick={onBack} type='button'>Back</Button>
+                    <Button onClick={onSubmit} type='button' className='bg-purple-600'>Next</Button>
+                    </div>
+                </div>
+            </div>
+    )} 
+
+
     {steps === STEPS.CATEGORY && ( 
 
             <div className='flex flex-col items-center py-8 gap-2'>
@@ -233,6 +287,29 @@ return (
                
             </div>
     )}
+
+{steps === STEPS.LANGUAGE && ( 
+
+<div className='flex flex-col items-center py-8 gap-2'>
+    <div className='grid grid-cols-3 gap-2'>
+    {languages.map(({label}) => (
+        <Box label={label} key={label} selected={state.language === label} onClick={() => {
+            setState({
+                ...state,
+                language:label
+
+            })
+        }}/>
+    ))}
+    </div>
+    <div className='flex gap-2'>
+        <Button onClick={onBack} type='button'>Back</Button>
+        <Button onClick={onSubmit} type='button' className='bg-purple-600'>Next</Button>
+    </div>
+   
+</div>
+)}
+
     
     {steps === STEPS.CONTENT && (
 

@@ -93,11 +93,11 @@ export default function Navbar({user,length}:UserMenuProps) {
                     {!user && (
                         <>
                             <div>
-                              <Link href='/login' className='py-2 px-6 border-black border-[1px]'>Login</Link>
+                              <Link href='/api/auth/signin' className='py-2 px-6 border-black border-[1px]'>Login</Link>
                             </div>
 
                             <div>
-                               <Link href='/register' className='py-2 px-6 bg-black text-white border-[1px] border-black '>Sign up</Link>
+                               <Link href='/api/auth/signin' className='py-2 px-6 bg-black text-white border-[1px] border-black '>Sign up</Link>
                             </div>
                         </>
                     )}

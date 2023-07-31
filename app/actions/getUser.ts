@@ -20,20 +20,15 @@ export default async function myUser() {
         const currentUser = await prisma.user.findUnique({
             where: {
                 email: session.user.email as string
-            }
-
+            },
         })
 
 
     if (!currentUser) {
         return null;
       }
-  
-      return {
-        ...currentUser,
-        createdAt: currentUser.createdAt.toISOString(),
-        updatedAt: currentUser.updatedAt.toISOString(),
-      }
+
+      return currentUser
 
     }catch(error:any) {
         throw new Error(error)

@@ -14,7 +14,7 @@ export const userConstant = [
     },
     {
         name:"Messages",
-        link:'/'
+        link:'/message'
     },
     {
         name:"Notifications",

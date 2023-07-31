@@ -1,6 +1,9 @@
 'use client'
 
+import { Button } from '@/components/ui/button';
+import { stripe } from '@/lib/stripe';
 import { Pause, Play } from 'lucide-react';
+import { redirect } from 'next/navigation';
 import React, { useState, useRef } from 'react';
 
 type VideoComponentProps = {
@@ -27,7 +30,7 @@ const VideoComponent = ({url}:VideoComponentProps) => {
   };
 
   return (
-    <div key={url} className='max-w-[400px] relative' onClick={isPlaying ? handleStopClick : handlePlayClick}>
+    <div key={url} className='max-w-[400px] relative' >
       <video ref={videoRef} width="400" controls={false}>
         <source src={url} type="video/mp4" />
         Your browser does not support the video tag.
