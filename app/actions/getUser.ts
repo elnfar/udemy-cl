@@ -21,6 +21,9 @@ export default async function myUser() {
             where: {
                 email: session.user.email as string
             },
+            include: {
+                paid:true
+            }
         })
 
 

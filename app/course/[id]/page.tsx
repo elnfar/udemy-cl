@@ -5,6 +5,7 @@ import { stripe } from "@/lib/stripe";
 import { Button } from "@/components/ui/button";
 import myUser from "../../actions/getUser";
 import { getServerSession } from "next-auth";
+import Link from "next/link";
 
 
 
@@ -18,11 +19,9 @@ export default async function SingleCourse({params}:{params:{id:string}}) {
     },
     include: {
         videos:true,
-        paid:true
     }
 })
 
-console.log(courses?.paid);
 
   // const course = await prisma.course.findUnique({
   //   where:{
@@ -76,8 +75,17 @@ console.log(courses?.paid);
 
       }
     
+    // console.log(user);
+    // console.log(courses?.id);
     
+    // console.log(user?.paid);
 
+
+
+    const singlePaidCoursesContain = user?.paid.some(obj => obj.courseId === courses?.id)
+
+    console.log(singlePaidCoursesContain);
+    
  
   return (
     <div>
@@ -91,7 +99,7 @@ console.log(courses?.paid);
                         <span className="text-neutral-500 font-semibold text-sm">{courses?.description}</span>
                         
                         <div className="space-x-4">
-                            <span>{courses?.createdAt.getFullYear() }</span>
+                            <span>{courses?.createdAt.toLocaleString()}</span>
                             <span>{courses?.language}</span>
                         </div>
                     </div>
@@ -109,11 +117,23 @@ console.log(courses?.paid);
                       
 
                       <div className="flex flex-col gap-2 ">
+
+
+                        {!singlePaidCoursesContain ? (
                       <Button type="submit" className="py-6 bg-white text-black rounded-none hover:text-white">
-
-                        {courses?.paid.map((item) => item.userId === user?.id ? 'Go to course' : 'Purchase')}
-
+                        Purchase
                       </Button>
+                        ): (
+                          <Link className="bg-purple-600 w-full py-4 text-center" href={`${params.id}/course-content`}>Go to course</Link>
+                        )}
+
+                        {/* {user?.paid.length === 0 && (
+                          'Purchase'
+                        )} */}
+
+                        {/* {!singlePaidCoursesContain ? 'Purchase' : 'Go to course'} */}
+                        
+
                       <Button type="button" className="bg-purple-600 text-white rounded-none py-6 hover:normal-case">Add to Cart</Button>
 
                       </div>

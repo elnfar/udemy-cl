@@ -21,6 +21,7 @@ model User {
     updatedAt DateTime @updatedAt
     stripeId String?
     course Course[]
+    paid Paid[]
 }
 
 model Paid {
@@ -29,7 +30,7 @@ model Paid {
   name String?
   stripeCustomerId String? @unique @map(name:"stripe_customer_id")
   courseId String?
-  course Course? @relation(fields: [courseId], references: [id])
+  user User? @relation(fields: [userId], references: [id])
 
   @@index([courseId])
 }
@@ -49,7 +50,6 @@ model Course {
     user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId String 
     productId String?
-    paid Paid[]
 
     @@index([userId])
 }
