@@ -19,14 +19,19 @@ model User {
     avatar String?
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+    stripeId String?
     course Course[]
 }
 
 model Paid {
   id String @id @default(uuid())
-  userId   String @unique 
+  userId String? @unique 
   name String?
   stripeCustomerId String? @unique @map(name:"stripe_customer_id")
+  courseId String?
+  course Course? @relation(fields: [courseId], references: [id])
+
+  @@index([courseId])
 }
 
 
@@ -44,6 +49,8 @@ model Course {
     user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId String 
     productId String?
+    paid Paid[]
+
     @@index([userId])
 }
 

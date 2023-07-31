@@ -1,13 +1,12 @@
 import myUser from '@/app/actions/getUser'
-import { metadata } from '@/app/layout'
 import { prisma } from '@/lib/prisma'
 import { stripe } from '@/lib/stripe'
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 
-const ENDPOINT_SECRET = process.env.STRIPE_WEBHOOK_SECRET || ''
+const ENDPOINT_SECRET = process.env.STRIPE_WEBHOOK_SECRET || 'whsec_b7634496bf770c89b7eea11cd3f444b665da5375bdc9c890c43556baa74d5b17'
 
-export async function POST(req: NextRequest,{params}:{params:{id:string}}) {
+export async function POST(req: NextRequest) {
   console.log('webhook received')
 
 
@@ -31,29 +30,27 @@ export async function POST(req: NextRequest,{params}:{params:{id:string}}) {
   console.log('Event', event)
 
 
-  switch (event.type) {
-    case 'payment_intent.succeeded': {
+     if(event.type === 'payment_intent.created') {
       const session = event.data.object as Stripe.PaymentIntent;
       // Save an order in your database, marked as 'awaiting payment'
 
 
       console.log(session);
-      
+      console.log(session.metadata);
+      console.log(session.metadata.courseId);
+
         console.log('completed');
         
-
-     
-        
-      // Check if the order is paid (for example, from a card payment)
-      //
-      // A delayed notification payment will have an `unpaid` status, as
-      // you're still waiting for funds to be transferred from the customer's
-      // account.
-
-
-      break;
+        await prisma.paid.create({
+          data: {
+            userId:session.metadata.userId,
+            name:session.metadata.courseId,
+            courseId:session.metadata.courseId
+          },
+        })        
     }
-    }
+    
+    
 
   return NextResponse.json({ received: true })
   }

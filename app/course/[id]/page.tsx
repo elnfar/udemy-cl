@@ -12,6 +12,18 @@ export default async function SingleCourse({params}:{params:{id:string}}) {
   
   const user = await myUser();
 
+  const courses = await prisma.course.findFirst({
+    where: {
+        id: params.id
+    },
+    include: {
+        videos:true,
+        paid:true
+    }
+})
+
+console.log(courses?.paid);
+
   // const course = await prisma.course.findUnique({
   //   where:{
   //     id:params.id
@@ -32,8 +44,11 @@ export default async function SingleCourse({params}:{params:{id:string}}) {
             },
           ],
 
-          metadata: {
-            paidBy: user?.id as string
+          payment_intent_data: {
+            metadata: {
+              userId:user?.id as string,
+              courseId: courses?.id as string
+            }
           },
           
           mode: 'payment',
@@ -44,14 +59,14 @@ export default async function SingleCourse({params}:{params:{id:string}}) {
       }) 
 
 
-      await prisma.course.update({
-        where: {
-          id:params.id
-        },
-        data: {
-          productId:user?.id
-        }
-      })
+      // await prisma.course.update({
+      //   where: {
+      //     id:params.id
+      //   },
+      //   data: {
+      //     productId:user?.id
+      //   }
+      // })
 
       console.log('success');
       
@@ -63,15 +78,7 @@ export default async function SingleCourse({params}:{params:{id:string}}) {
     
     
 
-    const courses = await prisma.course.findFirst({
-        where: {
-            id: params.id
-        },
-        include: {
-            videos:true
-        }
-    })
-
+ 
   return (
     <div>
         <div className="bg-zinc-900 text-white">
@@ -99,8 +106,14 @@ export default async function SingleCourse({params}:{params:{id:string}}) {
                  </div>
 
                  <form action={createCheckoutSession} className="py-2">
+                      
+
                       <div className="flex flex-col gap-2 ">
-                      <Button type="submit" className="py-6 bg-white text-black rounded-none hover:text-white">{courses?.productId === user?.id  ? 'Go to course' : 'Purchase'}</Button>
+                      <Button type="submit" className="py-6 bg-white text-black rounded-none hover:text-white">
+
+                        {courses?.paid.map((item) => item.userId === user?.id ? 'Go to course' : 'Purchase')}
+
+                      </Button>
                       <Button type="button" className="bg-purple-600 text-white rounded-none py-6 hover:normal-case">Add to Cart</Button>
 
                       </div>
