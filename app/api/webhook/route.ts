@@ -30,24 +30,24 @@ export async function POST(req: NextRequest) {
   console.log('Event', event)
 
 
-     if(event.type === 'payment_intent.created') {
-      const session = event.data.object as Stripe.PaymentIntent;
+     if(event.type === 'customer.subscription.updated') {
+      const subscription = event.data.object as Stripe.Subscription;
       // Save an order in your database, marked as 'awaiting payment'
 
 
-      console.log(session);
-      console.log(session.metadata);
-      console.log(session.metadata.courseId);
 
         console.log('completed');
         
-        await prisma.paid.create({
+        await prisma.user.update({
+          where: {
+            id: subscription.metadata.userId
+          },
           data: {
-            userId:session.metadata.userId,
-            name:session.metadata.courseId,
-            courseId:session.metadata.courseId
+            subsciptionEnds:subscription.cancel_at ? new Date(subscription.cancel_at * 1000) : new Date()
           },
         })        
+
+
     }
     
     
