@@ -23,89 +23,11 @@ export default async function SingleCourse({params}:{params:{id:string}}) {
 })
 
 
-    async function createCheckoutSession(data:FormData) {
 
-        'use server'
-
-
-        const lookup = data.get('lookup_key') as string
-        const prices = await stripe.prices.list({
-          lookup_keys: [lookup],
-          expand: ['data.product']
-        })
-    
-        
-        const session = await stripe.checkout.sessions.create({
-          billing_address_collection: 'auto',
-
-          line_items: [
-            {
-
-              price: "price_1NX2ooFyrvQoPvoHPUDAWbAD",
-              // For metered billing, do not pass quantity
-              quantity: 1,
-      
-            },
-          ],
-          subscription_data: {
-            metadata: {
-              userId:user?.id as string,
-              courseId: courses?.id as string,
-            }
-          },
-          
-          mode: 'subscription',
-          success_url: `http://localhost:3000/course/${params.id}/success?session_id={CHECKOUT_SESSION_ID}`,
-          cancel_url: `http://localhost:3000?canceled=true`,
-
-  
-      }) 
-
-  
-
-      console.log('success');
-      
-  
-      console.log(session);
-      redirect(session.url || '')
-
-      }
-
-
-      async function createPortalSession() {
-        'use server'
-      
-        const user = await myUser()
-      
-        console.log(user?.stripePurchasedId);
-        
-      
-        if(!user) {
-          throw new Error("no user")
-        }
-
-        if(!user.stripePurchasedId) {
-          throw new Error("no user")
-        }
-      
-        const portalSession = await stripe.billingPortal.sessions.create({
-
-          customer: user?.stripePurchasedId,
-          return_url: `http://localhost:3000/course/${params.id}`
-        })
-      
-        console.log(portalSession);
-        
-         redirect(portalSession.url)
-      }
-      
  
   return (
     <div>
 
-    <form action={createPortalSession}>
-        <Button type="submit">Yearly: $1/month</Button>
-      </form>
 
         <div className="bg-zinc-900 text-white">
          <div className="h-[45vh]  flex justify-between items-center mx-auto max-w-[1300px] py-8">
@@ -131,28 +53,15 @@ export default async function SingleCourse({params}:{params:{id:string}}) {
                     ))}
                  </div>
 
-                 <form action={createCheckoutSession} className="py-2">
                       
 
-                      <div className="flex flex-col gap-2 ">
-
-                      <input type="hidden" name="lookup_key" value="monthly-pro" />
-                      <Button type="submit" className="py-6 bg-white text-black rounded-none hover:text-white">
-                       {user?.stripePurchasedId ? 'Go to course' : 'Get Pro'}
-                      </Button>
-
-
-                        {/* {user?.paid.length === 0 && (
-                          'Purchase'
-                        )} */}
-
-                        {/* {!singlePaidCoursesContain ? 'Purchase' : 'Go to course'} */}
-                        
-
-                      <Button type="button" className="bg-purple-600 text-white rounded-none py-6 hover:normal-case">Add to basket</Button>
+                      <div className="flex flex-col gap-1 py-2">
+                      
+                      <Button type="button" className="bg-purple-600 text-white hover:border rounded-none py-6 hover:normal-case">{user?.stripePurchasedId ? 'Go to course':'Get Pro'}</Button>
+                      <Button type="button" className="bg-white border text-black hover:text-white rounded-none py-6 hover:normal-case">Add to basket</Button>
 
                       </div>
-                 </form>
+                 {/* </form> */}
 
                  {/* <form action={createPortalSession}>
                     <Button type="submit">Manage Subscription</Button>

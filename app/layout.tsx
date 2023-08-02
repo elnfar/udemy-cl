@@ -6,8 +6,8 @@ import { getServerSession } from 'next-auth'
 import { getUserSession } from '@/lib/auth'
 import { TProvider } from '@/providers/toast-provider'
 import { prisma } from '@/lib/prisma'
-import myUser from './actions/getUser'
 import "@uploadthing/react/styles.css";
+import myUser from './actions/getUser'
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -23,7 +23,10 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
 
-  const user =  await myUser();
+  const user = await myUser()
+
+  console.log(user);
+  
   console.log(user);
 
   const courses = await prisma.course.findMany({

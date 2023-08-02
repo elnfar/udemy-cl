@@ -37,8 +37,31 @@ const authOptions:NextAuthOptions = {
             console.log('user',user);
             
             return true
+        },
+        async jwt({ token, user, account, profile }) {
+            console.log({ token, account, profile, user })
+            console.log(token.id);
+            
+            if (profile) {
+              const user = await prisma.user.findUnique({
+                where: {
+                  email: profile.email
+                }
+              })
+              if (!user) {
+                throw new Error('No user found')
+              }
+              token.id = user.id
+              token.user = {
+                id: user.id
+              }
+              console.log(token);
+              console.log(token.id);
+              
+            }
+            return token
+          }
         }
-    }
 
 }
 

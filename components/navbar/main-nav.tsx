@@ -10,7 +10,7 @@ import qs from 'query-string'
 import {ShoppingCartIcon} from 'lucide-react'
 
 interface UserMenuProps {
-    user:any;
+    user:User | null;
     length:any
 }
 
@@ -104,8 +104,8 @@ export default function Navbar({user,length}:UserMenuProps) {
 
                     {user && (
                         <div className="w-[40px] h-[40px] rounded-full bg-black flex items-center justify-center text-white cursor-pointer" onClick={() => setUserMenuOpen(prev => !prev)}>
-                            <span>{user?.name.at(0)?.toUpperCase()}</span>
-                            <span>{user.name.at(1)?.toUpperCase()}</span>
+                            <span>{user.name}</span>
+                            <span>{user.email}</span>
                         </div>
                     )}
 

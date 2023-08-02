@@ -20,4 +20,9 @@ export const userConstant = [
         name:"Notifications",
         link:'/'
     },
+
+    {
+        name:"Udemy +",
+        link:'/udemy-plus'
+    },
 ]

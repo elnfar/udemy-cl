@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
             id: subscription.metadata.userId
           },
           data: {
-            subsciptionEnds:subscription.cancel_at ? new Date(subscription.cancel_at * 1000) : new Date()
+            subsciptionEnds:subscription.cancel_at ? new Date(subscription.cancel_at * 1000) : null,
           },
         })        
 

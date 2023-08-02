@@ -24,7 +24,8 @@ export async function GET(req: NextRequest) {
     },
     data: {
       stripePurchasedId: customerId,
-      subsciptionEnds:null
+      subsciptionEnds:null,
+      plan:'PRO'
     }
   })
 
