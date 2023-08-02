@@ -51,6 +51,7 @@ export default async function page() {
                 id={item.id}
                 option={item.option}
                 title={item.title}
+                key={item.id}
                 />
             ))}
       </div>

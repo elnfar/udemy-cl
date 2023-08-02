@@ -49,7 +49,7 @@ export default async function SingleCourse({params}:{params:{id:string}}) {
               <div className=" flex flex-col">
                 <div className="border">
                     {courses?.videos.map((item) => (
-                        <VideoComponent url={item.url}/>
+                        <VideoComponent url={item.url} key={item.id}/>
                     ))}
                  </div>
 
@@ -57,7 +57,7 @@ export default async function SingleCourse({params}:{params:{id:string}}) {
 
                       <div className="flex flex-col gap-1 py-2">
                       
-                      <Button type="button" className="bg-purple-600 text-white hover:border rounded-none py-6 hover:normal-case">{user?.stripePurchasedId ? 'Go to course':'Get Pro'}</Button>
+                      <Button type="button" className="bg-purple-600 text-white hover:border rounded-none py-6 hover:normal-case">{user?.plan === "PRO" ? 'Go to course':'Get Pro'}</Button>
                       <Button type="button" className="bg-white border text-black hover:text-white rounded-none py-6 hover:normal-case">Add to basket</Button>
 
                       </div>

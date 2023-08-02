@@ -8,6 +8,7 @@ import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import qs from 'query-string'
 import {ShoppingCartIcon} from 'lucide-react'
+import Image from "next/image";
 
 interface UserMenuProps {
     user:User | null;
@@ -54,7 +55,7 @@ export default function Navbar({user,length}:UserMenuProps) {
         <div className="p-3 px-4">
             <div className="flex items-center justify-between gap-2">
                 <nav className="flex items-center gap-6 flex-1 relative">
-                    <Link href='/'><img src="/logo.svg" alt="Logo" width={91} height={34}/></Link>
+                    <Link href='/'><Image src="/logo.svg" alt="Logo" width={91} height={34}/></Link>
 
 
 
@@ -103,9 +104,8 @@ export default function Navbar({user,length}:UserMenuProps) {
                     )}
 
                     {user && (
-                        <div className="w-[40px] h-[40px] rounded-full bg-black flex items-center justify-center text-white cursor-pointer" onClick={() => setUserMenuOpen(prev => !prev)}>
-                            <span>{user.name}</span>
-                            <span>{user.email}</span>
+                        <div className=" rounded-full bg-black flex items-center justify-center text-white cursor-pointer" onClick={() => setUserMenuOpen(prev => !prev)}>
+                            <Image src={user.avatar || ''} alt="Image"  width={40} height={40} className="rounded-full"/>
                         </div>
                     )}
 

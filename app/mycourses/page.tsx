@@ -24,6 +24,7 @@ export default async function MyCourses() {
             option={item.option}
             images={item.images}
             id={item.id}
+            key={item.id}
             />
         ))}
     </div>

@@ -1,6 +1,7 @@
 'use client'
 
 import { Course, Images } from '@prisma/client'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -25,7 +26,7 @@ export default function TeachOnUdemy({title,id,images,option}:TeachOnUdemy) {
         <div className='mx-4 p-4'>
             <div className='w-[300px]'>
             {images.map((item) => (
-                <img src={item.url} key={item.id} alt={item.url} className='h-[173px] w-[300px] object-cover border-4 border-yellow-300'/>
+                <Image src={item.url} width={150} height={150} key={item.id} alt={item.url} className='h-[173px] w-[300px] object-cover border-4 border-yellow-300'/>
             ))}
             </div>
             <p>{title}</p>

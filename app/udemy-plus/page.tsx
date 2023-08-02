@@ -101,9 +101,9 @@ export default async function UdemyPlus() {
     <div>
 
                          <form action={user?.plan === "PRO" ? createPortalSession : createCheckoutSession} className="py-2">
-                                {!user?.stripePurchasedId && (
+
                                     <input type="hidden" name="lookup_key" value="monthly-pro" />
-                                )}  
+
                                 <Button type="submit" className="py-6 bg-white text-black rounded-none hover:text-white">
                                         {user?.plan === "PRO" ? 'Manage your subscription' : 'Get pro'}
                                 </Button>
