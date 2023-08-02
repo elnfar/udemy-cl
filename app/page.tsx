@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import myUser from "./actions/getUser";
-import TeachOnUdemy from "./(create)/teach-on-udemy/new-course/(components)/teach-udemy";
+import TeachOnUdemy from "../(components)/teach-udemy";
 import SliderMain from "./home-slider";
 
 const images = [

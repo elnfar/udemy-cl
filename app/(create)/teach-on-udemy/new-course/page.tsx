@@ -1,5 +1,5 @@
 import React from 'react'
-import NewCourse from './(components)/create-course-form'
+import NewCourse from '../../../../(components)/create-course-form'
 import { prisma } from '@/lib/prisma'
 import myUser from '@/app/actions/getUser'
 
