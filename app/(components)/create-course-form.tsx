@@ -11,7 +11,7 @@ import { ChangeEvent, useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import Basic from './dropzone'
 
-import { UploadButton } from "../lib/uploadthings";
+import { UploadButton } from "../../lib/uploadthings";
 
 
 

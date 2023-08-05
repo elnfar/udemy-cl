@@ -22,9 +22,9 @@ export default function TeachOnUdemy({title,id,images,option}:TeachOnUdemy) {
     <div className='py-4 cursor-pointer' onClick={() => router.push(`/course/${id}`)}>
 
         <div className='mx-4 p-4'>
-            <div className='w-[300px]'>
+            <div className='w-[250px]'>
             {images.map((item) => (
-                <Image src={item.url} width={150} height={150} key={item.id} alt={item.url} className='h-[173px] w-[300px] object-cover border-4 border-yellow-300'/>
+                <Image src={item.url} width={300} height={80} key={item.id} alt={item.url} className='h-[150px] w-[655px]  object-cover border-4 border-yellow-300'/>
             ))}
             </div>
             <p>{title}</p>

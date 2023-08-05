@@ -1,5 +1,5 @@
 import { User } from "@prisma/client"
-import { userConstant } from "@/(constants)/index"
+import { userConstant } from "@/app/(constants)"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { signOut } from "next-auth/react"
