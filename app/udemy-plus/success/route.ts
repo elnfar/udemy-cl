@@ -1,9 +1,10 @@
 import myUser from '@/app/actions/getUser'
-import { getUserSession } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { stripe } from '@/lib/stripe'
 import { redirect } from 'next/navigation'
 import { NextRequest } from 'next/server'
+
+export const dynamic = 'force-dynamic' 
 
 export async function GET(req: NextRequest) {
   const user = await myUser()
@@ -29,9 +30,6 @@ export async function GET(req: NextRequest) {
     }
   })
 
-
-  console.log('exe');
-  
 
   redirect(`/`)
 }

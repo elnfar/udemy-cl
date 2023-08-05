@@ -1,10 +1,11 @@
 import { prisma } from "@/lib/prisma";
 import myUser from "@/app/actions/getUser";
-import TeachOnUdemy from "../../(components)/teach-udemy";
+import TeachOnUdemy from "../../components/(components)/teach-udemy";
 import { ComboboxDemo } from "@/components/ui/dropdown";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
+export const dynamic = 'force-dynamic' 
 
 export default async function page() {
 

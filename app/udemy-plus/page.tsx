@@ -3,8 +3,6 @@ import myUser from '../actions/getUser';
 import { stripe } from '@/lib/stripe';
 import { redirect } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { createPortal } from 'react-dom';
-import { prisma } from '@/lib/prisma';
 
 export default async function UdemyPlus() {
 
