@@ -12,10 +12,9 @@ import Image from "next/image";
 
 interface UserMenuProps {
     user:User | null;
-    length:any
 }
 
-export default function Navbar({user,length}:UserMenuProps) {
+export default function Navbar({user}:UserMenuProps) {
 
     const [userMenuOpen,setUserMenuOpen] = useState(false)
     const [searchQuery,setSearchQuery] = useState('')
@@ -84,7 +83,7 @@ export default function Navbar({user,length}:UserMenuProps) {
                     <div className="relative">
                        <Link href='/basket'><ShoppingCartIcon className='h-6 w-10'/></Link>
                         <div className="absolute -right-1 -bottom-2 bg-blue-500 rounded-full w-6 h-6 flex justify-center items-center text-white">
-                            {length}
+                            {user?.basketIds.length}
                         </div>
                     </div>
                 </div>

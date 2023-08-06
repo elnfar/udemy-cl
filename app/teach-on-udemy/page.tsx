@@ -35,7 +35,7 @@ export default async function page() {
 
         <div>   
             <Button className=' rounded-none h-12 bg-purple-500'>
-                  <Link href='/teach-on-udemy/new-course'>New Course</Link>
+                  <Link href='/new-course'>New Course</Link>
             </Button>
         </div>
 

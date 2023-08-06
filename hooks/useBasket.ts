@@ -1,60 +1,50 @@
-import { User } from "@prisma/client";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useCallback, useMemo } from "react";
+import React, { useCallback,useMemo } from "react";
 
+import { Router } from "next/router";
 
-interface IUseFavorite {
-  courseId: string;
-  currentUser?: any
+interface IUseBasket {
+    courseId:string;
+    currentUser: any
 }
 
-const useBasket = ({ courseId, currentUser }: IUseFavorite) => {
 
-  const router = useRouter();
+const useBasket = ({courseId,currentUser}:IUseBasket) => {
+    const rotuer = useRouter();
 
-  const hasBasket = useMemo(() => {
-    const list = currentUser?.basketIds || [];
 
-    return list.includes(courseId);
-  }, [currentUser, courseId]);
+    const hasBasket = useMemo(() => {
+        const list = currentUser?.basketIds || [];
+        return list.includes(courseId)
+    },[currentUser,courseId])
 
-  const toggleFavorite = useCallback(async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
 
-    // if (!currentUser) {
-    //   return router.push('/login')
-    // }
+    const toggleBasket = useCallback(async (e:React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation();
 
-    try {
-      let request;
+        try {
+            let request;
 
-      if (hasBasket) {
-        request = () => axios.delete(`/api/basket/${courseId}`);
-        // request = () => router.push('/basket')
-      } else {
-        request = () => axios.post(`/api/basket/${courseId}`);
-      }
+            if(hasBasket) {
+                request = () => axios.delete(`/api/basket/${courseId}`)
+            }else {
+                request = () => axios.post(`/api/basket/${courseId}`)
+            }
 
-      await request();
-      router.refresh();
-    } catch (error:any) {
-        throw new Error(error)
+            await request();
+            rotuer.refresh();
+        }catch(error:any) {
+            throw new Error(error)
+        }
+
+
+    },[currentUser,hasBasket,courseId,rotuer])
+
+
+    return {
+        hasBasket,toggleBasket
     }
-  }, 
-  [
-    currentUser, 
-    hasBasket, 
-    courseId,
-    router
-  ]);
-
-  return {
-    hasBasket,
-    toggleFavorite,
-  }
 }
-
-
 
 export default useBasket;

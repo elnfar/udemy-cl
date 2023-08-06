@@ -12,3 +12,10 @@ export const getUserSession = async ():Promise<AuthUser> => {
 
     return session.user as AuthUser
 }
+
+
+export const User = async () => {
+    const session = await getServerSession();
+    return session?.user as AuthUser
+
+}

@@ -22,8 +22,7 @@ export default function MainMenu({currentUser,closeUserMenu}:UserMenuProps) {
         <div className="flex items-center gap-4">
 
                     <div className="w-[50px] h-[50px] rounded-full bg-black flex items-center justify-center text-white cursor-pointer" onClick={() => router.push('/user')}>
-                                <span>{currentUser?.name?.at(0)?.toUpperCase()}</span>
-                                <span>{currentUser?.name?.at(1)?.toUpperCase()} and mes</span>
+                                <img src={currentUser?.avatar || ''} alt="profile-image" className="rounded-full"/>
                     </div>
 
                     <div className="flex flex-col">

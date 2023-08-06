@@ -1,17 +1,17 @@
 import { prisma } from "@/lib/prisma"
 import VideoComponent from "./videos"
-import { redirect } from "next/navigation";
-import { stripe } from "@/lib/stripe";
-import { Button } from "@/components/ui/button";
-import myUser from "../../actions/getUser";
-import { getServerSession } from "next-auth";
-import Link from "next/link";
+import Induvidual from "../component"
+import myUser from "@/app/actions/getUser"
+
+
 
 
 
 export default async function SingleCourse({params}:{params:{id:string}}) {
   
-  const user = await myUser();
+
+    const user = await myUser();
+
 
   const courses = await prisma.course.findFirst({
     where: {
@@ -21,7 +21,6 @@ export default async function SingleCourse({params}:{params:{id:string}}) {
         videos:true,
     }
 })
-
 
 
  
@@ -53,14 +52,13 @@ export default async function SingleCourse({params}:{params:{id:string}}) {
                     ))}
                  </div>
 
-                      
 
-                      <div className="flex flex-col gap-1 py-2">
-                      
-                      <Button type="button" className="bg-purple-600 text-white hover:border rounded-none py-6 hover:normal-case">{user?.plan === "PRO" ? 'Go to course':'Get Pro'}</Button>
-                      <Button type="button" className="bg-white border text-black hover:text-white rounded-none py-6 hover:normal-case">Add to basket</Button>
-
-                      </div>
+                    <Induvidual
+                    
+                    courseId={params.id}
+                    currentUser={user}
+                    />
+                    
                  {/* </form> */}
 
                  {/* <form action={createPortalSession}>
@@ -74,4 +72,8 @@ export default async function SingleCourse({params}:{params:{id:string}}) {
     </div>
   )
 }
+
+
+
+
 

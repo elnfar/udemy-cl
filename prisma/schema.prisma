@@ -24,7 +24,7 @@ model User {
     name  String?
     avatar String?
     plan   Plan   @default(FREE)
-
+    basketIds String[]
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
     stripePurchasedId String?
