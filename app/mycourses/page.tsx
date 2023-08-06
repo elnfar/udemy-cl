@@ -13,9 +13,6 @@ export default async function MyCourses() {
         where: {
             userId:user?.id
         },
-        include:{
-            images:true
-        }
     })
 
 
@@ -30,7 +27,6 @@ export default async function MyCourses() {
             <TeachOnUdemy 
             title={item.title}
             option={item.option}
-            images={item.images}
             id={item.id}
             key={item.id}
             />

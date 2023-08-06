@@ -38,8 +38,8 @@ model Course {
     id String @id @default(uuid())
     option String
     title String
-    videos   Video[]
-    images Images[]
+    videos   String[]
+    images String[]
     category String
     description String? 
     language  String?
@@ -50,24 +50,24 @@ model Course {
     @@index([userId])
 }
 
-model Video {
-  id        String   @id @default(uuid())
-  url       String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  courseId  String
-  course    Course   @relation(fields: [courseId], references: [id])
+// model Video {
+//   id        String   @id @default(uuid())
+//   url       String
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+//   courseId  String
+//   course    Course   @relation(fields: [courseId], references: [id])
 
-  @@index([courseId])
-}
+//   @@index([courseId])
+// }
 
-model Images {
-  id        String   @id @default(uuid())
-  url       String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  courseId  String
-  course    Course   @relation(fields: [courseId], references: [id])
+// model Images {
+//   id        String   @id @default(uuid())
+//   url       String
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+//   courseId  String
+//   course    Course   @relation(fields: [courseId], references: [id])
 
-  @@index([courseId])
-}
+//   @@index([courseId])
+// }

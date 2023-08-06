@@ -3,7 +3,7 @@
 import Box from '@/components/box'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Course,Video } from '@prisma/client'
+
 import axios from 'axios'
 import { Circle, CircleDashed, Dot, DotIcon, Text, VideoIcon } from 'lucide-react'
 import {useParams, useRouter} from 'next/navigation'
@@ -94,11 +94,11 @@ export const categories = [
   type Ival = {
     option:string,
     title:string,
-    images:string[],
+    images: { fileUrl: string; fileKey: string; }[],
     description:string,
     language:string,
     category:string,
-    videos:string[]
+    videos: { fileUrl: string; fileKey: string; }[]
   }
 
 const initialValues:Ival = {
@@ -153,9 +153,11 @@ export default function NewCourse() {
         setIsLoading(true)
         axios.post('/api/create-course', {
           ...state,
-          images:image.map((item) =>  item.fileUrl),
-          videos:video.map((item) => item.fileUrl)
+          videos:video,
+          images:image
         })
+      
+        
         
         .then(() => {
           toast.success('Course created successfully')
@@ -315,12 +317,18 @@ return (
 
           <div className='flex flex-col items-center h-[70vh] justify-center'>
 
+            <h1>Thumbnail Image</h1>
               <UploadButton
                 endpoint="imageUploader"
                 onClientUploadComplete={(res) => {
                   // Do something with the response
                   if(res) {
                     setImage(res)
+
+                    setState(prevState => ({
+                      ...prevState,
+                      images: [...prevState.images, ...res]
+                    }));
                     const json = JSON.stringify(res);
 
                     console.log(json);
@@ -338,13 +346,19 @@ return (
                 }}
               />
 
-
+                
+                <h1>Videos</h1>
               <UploadButton
                 endpoint="imageUploader"
                 onClientUploadComplete={(res) => {
                   // Do something with the response
                   if(res) {
-                    setVideo(res)
+                    setVideo(prev => [...prev,...res])
+
+                    setState(prevState => ({
+                      ...prevState,
+                      videos: [...prevState.videos, ...res]
+                    }));
 
                     const json = JSON.stringify(res);
                     console.log(json);
@@ -359,6 +373,61 @@ return (
                   alert(`ERROR! ${error.message}`);
                 }}
               />
+
+
+        <UploadButton
+                endpoint="imageUploader"
+                onClientUploadComplete={(res) => {
+                  // Do something with the response
+                  if(res) {
+                    setVideo(prev => [...prev,...res])
+
+                    setState(prevState => ({
+                      ...prevState,
+                      videos: [...prevState.videos, ...res]
+                    }));
+
+                    const json = JSON.stringify(res);
+                    console.log(json);
+                    console.log(video);
+                    
+                  }
+                  console.log("Files: ", res);
+                  setIsVideoUploaded(false)
+                }}
+                onUploadError={(error: Error) => {
+                  // Do something with the error.
+                  alert(`ERROR! ${error.message}`);
+                }}
+              />
+
+
+                <UploadButton
+                endpoint="imageUploader"
+                onClientUploadComplete={(res) => {
+                  // Do something with the response
+                  if(res) {
+                    setVideo(prev => [...prev,...res])
+
+                    setState(prevState => ({
+                      ...prevState,
+                      videos: [...prevState.videos, ...res]
+                    }));
+
+                    const json = JSON.stringify(res);
+                    console.log(json);
+                    console.log(video);
+                    
+                  }
+                  console.log("Files: ", res);
+                  setIsVideoUploaded(false)
+                }}
+                onUploadError={(error: Error) => {
+                  // Do something with the error.
+                  alert(`ERROR! ${error.message}`);
+                }}
+              />
+
 
   
               {!isVideoUploaded && !isImageUploaded &&  (

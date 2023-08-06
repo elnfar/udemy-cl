@@ -17,11 +17,6 @@ export default async function page() {
         where: {
             userId:user?.id,
         },
-        include:{
-          videos:true,
-          images:true
-        }
-        
     })
 
   
@@ -48,7 +43,6 @@ export default async function page() {
 
             {courses.map((item) => (
                 <TeachOnUdemy 
-                images={item.images}
                 id={item.id}
                 option={item.option}
                 title={item.title}

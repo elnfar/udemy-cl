@@ -1,6 +1,5 @@
 'use client'
 
-import { Images } from '@prisma/client'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
@@ -8,12 +7,11 @@ import { useRouter } from 'next/navigation'
 
 type TeachOnUdemy = {
     title:string,
-    images: Images[],
     option:string
     id:string
 }
 
-export default function TeachOnUdemy({title,id,images,option}:TeachOnUdemy) {
+export default function TeachOnUdemy({title,id,option}:TeachOnUdemy) {
 
     const router = useRouter()
 
@@ -23,9 +21,9 @@ export default function TeachOnUdemy({title,id,images,option}:TeachOnUdemy) {
 
         <div className='mx-4 p-4'>
             <div className='w-[250px]'>
-            {images.map((item) => (
+            {/* {images.map((item) => (
                 <Image src={item.url} width={300} height={80} key={item.id} alt={item.url} className='h-[150px] w-[655px]  object-cover border-4 border-yellow-300'/>
-            ))}
+            ))} */}
             </div>
             <p>{title}</p>
             <p>{option}</p>

@@ -1,7 +1,8 @@
 import { prisma } from "@/lib/prisma";
-import myUser from "./actions/getUser";
 import TeachOnUdemy from "../components/(components)/teach-udemy";
 import SliderMain from "./home-slider";
+import myUser from "./actions/getUser";
+
 
 const images = [
   "/a.jpg",
@@ -13,25 +14,25 @@ export const dynamic = 'force-dynamic'
 
 export default async function Home() {
 
-
   const user = await myUser();
 
 
 
     const courses = await prisma.course.findMany({
-        include: {
-          videos:true,
-          images:true
-        },
+       where: {
+        id:user?.id
+       }
         
     })
+
+  
 
   return (
     <main>
       <SliderMain images={images}/>
       <div className="flex items-center flex-wrap">
       {courses.map((item) => (
-        <TeachOnUdemy id={item.id} key={item.id} images={item.images} title={item.title} option={item.option} />
+        <TeachOnUdemy id={item.id} key={item.id}  title={item.title} option={item.option} />
       ))}
       </div>  
     </main>

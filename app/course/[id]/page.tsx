@@ -17,9 +17,6 @@ export default async function SingleCourse({params}:{params:{id:string}}) {
     where: {
         id: params.id
     },
-    include: {
-        videos:true,
-    }
 })
 
 
@@ -48,13 +45,13 @@ export default async function SingleCourse({params}:{params:{id:string}}) {
               <div className=" flex flex-col">
                 <div className="border">
                     {courses?.videos.map((item) => (
-                        <VideoComponent url={item.url} key={item.id}/>
+                       <VideoComponent url={item}/>
                     ))}
                  </div>
 
 
                     <Induvidual
-                    
+                    path={user?.stripePurchasedId ? `/course/${params.id}/access` :'/udemy-plus'}
                     courseId={params.id}
                     currentUser={user}
                     />

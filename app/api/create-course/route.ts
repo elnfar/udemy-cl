@@ -17,9 +17,11 @@ export async function POST (
 
     const {option,title,category,videos,images,language,description} = body;
 
-    const imgData = images.map((url:string) => ({url}));
-    const videosData = videos.map((url: string) => ({ url }));
 
+    const imageUrls = images.map((img:any) => img.fileUrl);
+    const videodeoUrls = videos.map((vid:any) => vid.fileUrl);
+    console.log(body);
+    
     const course = await prisma.course.create({
         data: {
             option,
@@ -27,23 +29,14 @@ export async function POST (
             language,
             description,
             category,
-            images:{
-                create:imgData
-            },
-            videos:{
-                create:videosData
-            },
-        
+            images:imageUrls,
+            videos:videodeoUrls,
             userId:user.id
-        },
-        select: {
-            id:true,
-            videos:true,
-            images:true
         },
     })
     console.log(course);
-    
+    console.log(body);
+
     return NextResponse.json(course)
 }
 

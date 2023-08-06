@@ -83,7 +83,7 @@ export default function Navbar({user}:UserMenuProps) {
                     <div className="relative">
                        <Link href='/basket'><ShoppingCartIcon className='h-6 w-10'/></Link>
                         <div className="absolute -right-1 -bottom-2 bg-blue-500 rounded-full w-6 h-6 flex justify-center items-center text-white">
-                            {user?.basketIds.length}
+                          {user?.basketIds.length === 0 ? 0 : user?.basketIds.length}
                         </div>
                     </div>
                 </div>
