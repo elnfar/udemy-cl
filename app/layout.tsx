@@ -2,10 +2,7 @@ import Navbar from '@/components/navbar/main-nav'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import { getServerSession } from 'next-auth'
-import { getUserSession } from '@/lib/auth'
 import { TProvider } from '@/providers/toast-provider'
-import { prisma } from '@/lib/prisma'
 import "@uploadthing/react/styles.css";
 import myUser from './actions/getUser'
 
