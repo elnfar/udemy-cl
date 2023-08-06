@@ -39,7 +39,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <TProvider/>
-        <Navbar user={user} length={courses.length}/>
+        <Navbar user={user}/>
         {children}
         </body>
     </html>
