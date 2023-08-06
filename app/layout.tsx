@@ -25,16 +25,6 @@ export default async function RootLayout({
 
   const user = await myUser()
 
-  console.log(user);
-  
-  console.log(user);
-
-  const courses = await prisma.course.findMany({
-    where: {
-        userId:user?.id
-    }
-  })
-
   return (
     <html lang="en">
       <body className={inter.className}>
