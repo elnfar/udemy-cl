@@ -18,8 +18,12 @@ export async function POST (
     const {option,title,category,videos,images,language,description} = body;
 
 
-    const imageUrls = images.map((img:any) => img.fileUrl);
+   const imageUrls = images.map((img:any) => img.fileUrl)
+   console.log(imageUrls);
+   
     const videodeoUrls = videos.map((vid:any) => vid.fileUrl);
+    console.log(videodeoUrls);
+    
     console.log(body);
     
     const course = await prisma.course.create({

@@ -5,6 +5,7 @@ import { Inter } from 'next/font/google'
 import { TProvider } from '@/providers/toast-provider'
 import "@uploadthing/react/styles.css";
 import myUser from './actions/getUser'
+import { prisma } from '@/lib/prisma'
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -26,7 +27,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <TProvider/>
-        <Navbar user={user}/>
+        <Navbar user={user} />
         {children}
         </body>
     </html>

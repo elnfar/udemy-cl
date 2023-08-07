@@ -7,10 +7,11 @@ import { redirect } from 'next/navigation';
 import React, { useState, useRef } from 'react';
 
 type VideoComponentProps = {
-    url:string
+    url:string | undefined
+    big:boolean
 }
 
-const VideoComponent = ({url}:VideoComponentProps) => {
+const VideoComponent = ({url,big}:VideoComponentProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
@@ -30,8 +31,8 @@ const VideoComponent = ({url}:VideoComponentProps) => {
   };
 
   return (
-    <div key={url} className='max-w-[400px] relative' >
-      <video ref={videoRef} width="400" controls={false}>
+    <div key={url} className={`relative`}>
+      <video ref={videoRef} width="1200" className=' object-cover' controls={true}>
         <source src={url} type="video/mp4" />
         Your browser does not support the video tag.
       </video>

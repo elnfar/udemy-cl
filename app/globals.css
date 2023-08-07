@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+@uploadthing/react/styles.css;
 
 body {
     height: 100%;

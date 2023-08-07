@@ -9,7 +9,7 @@ import { Circle, CircleDashed, Dot, DotIcon, Text, VideoIcon } from 'lucide-reac
 import {useParams, useRouter} from 'next/navigation'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
-import Basic from './dropzone'
+import "@uploadthing/react/styles.css";
 
 import { UploadButton } from "../../lib/uploadthings";
 
@@ -125,6 +125,10 @@ export default function NewCourse() {
     fileUrl: string;
     fileKey: string;
 }[]>([])
+
+  let amount = 0
+  const [container,setContainer] = useState(amount)
+
 
     const [isLoading, setIsLoading] = useState(false)
     const [isImageUploaded,setIsImageUploaded] = useState(true)
@@ -317,6 +321,7 @@ return (
 
           <div className='flex flex-col items-center h-[70vh] justify-center'>
 
+      <div>
             <h1>Thumbnail Image</h1>
               <UploadButton
                 endpoint="imageUploader"
@@ -345,10 +350,78 @@ return (
                   alert(`ERROR! ${error.message}`);
                 }}
               />
-
+    </div>
                 
-                <h1>Videos</h1>
-              <UploadButton
+
+
+                <p>Add your videos or content:</p>
+
+
+                <div className='w-full'>
+
+                    <UploadButton
+                    endpoint="imageUploader"
+                    onClientUploadComplete={(res) => {
+                      // Do something with the response
+                      if(res) {
+                        setVideo(prev => [...prev,...res])
+
+                        setState(prevState => ({
+                          ...prevState,
+                          videos: [...prevState.videos, ...res]
+                        }));
+
+                        const json = JSON.stringify(res);
+                        console.log(json);
+                        console.log(video);
+                        
+                      }
+                      console.log("Files: ", res);
+                      setIsVideoUploaded(false)
+                    }}
+                    onUploadError={(error: Error) => {
+                      // Do something with the error.
+                      alert(`ERROR! ${error.message}`);
+                    }}
+
+                  />
+                </div>
+            
+                
+
+                {[...Array(container)].map((_, index) => (
+                        <UploadButton
+                        endpoint="imageUploader"
+                        onClientUploadComplete={(res) => {
+                          // Do something with the response
+                          if(res) {
+                            setVideo(prev => [...prev,...res])
+
+                            setState(prevState => ({
+                              ...prevState,
+                              videos: [...prevState.videos, ...res]
+                            }));
+
+                            const json = JSON.stringify(res);
+                            console.log(json);
+                            console.log(video);
+                            
+                          }
+                          console.log("Files: ", res);
+                          setIsVideoUploaded(false)
+                        }}
+                        onUploadError={(error: Error) => {
+                          // Do something with the error.
+                          alert(`ERROR! ${error.message}`);
+                        }}
+                      />
+
+      ))}
+
+<button onClick={() => setContainer(prev => prev+1)}>Add</button>
+
+
+                {/* <UploadButton
                 endpoint="imageUploader"
                 onClientUploadComplete={(res) => {
                   // Do something with the response
@@ -373,61 +446,7 @@ return (
                   alert(`ERROR! ${error.message}`);
                 }}
               />
-
-
-        <UploadButton
-                endpoint="imageUploader"
-                onClientUploadComplete={(res) => {
-                  // Do something with the response
-                  if(res) {
-                    setVideo(prev => [...prev,...res])
-
-                    setState(prevState => ({
-                      ...prevState,
-                      videos: [...prevState.videos, ...res]
-                    }));
-
-                    const json = JSON.stringify(res);
-                    console.log(json);
-                    console.log(video);
-                    
-                  }
-                  console.log("Files: ", res);
-                  setIsVideoUploaded(false)
-                }}
-                onUploadError={(error: Error) => {
-                  // Do something with the error.
-                  alert(`ERROR! ${error.message}`);
-                }}
-              />
-
-
-                <UploadButton
-                endpoint="imageUploader"
-                onClientUploadComplete={(res) => {
-                  // Do something with the response
-                  if(res) {
-                    setVideo(prev => [...prev,...res])
-
-                    setState(prevState => ({
-                      ...prevState,
-                      videos: [...prevState.videos, ...res]
-                    }));
-
-                    const json = JSON.stringify(res);
-                    console.log(json);
-                    console.log(video);
-                    
-                  }
-                  console.log("Files: ", res);
-                  setIsVideoUploaded(false)
-                }}
-                onUploadError={(error: Error) => {
-                  // Do something with the error.
-                  alert(`ERROR! ${error.message}`);
-                }}
-              />
-
+ */}
 
   
               {!isVideoUploaded && !isImageUploaded &&  (

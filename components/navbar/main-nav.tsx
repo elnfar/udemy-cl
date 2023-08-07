@@ -1,6 +1,6 @@
 'use client'
 
-import { User } from "@prisma/client";
+import { Course, User } from "@prisma/client";
 import Link from "next/link"
 import { FormEvent, useState } from "react";
 import MainMenu from "./main-menu";
@@ -20,7 +20,7 @@ export default function Navbar({user}:UserMenuProps) {
     const [searchQuery,setSearchQuery] = useState('')
     console.log(user);
     
-
+    
     const router = useRouter();
 
     const params = useSearchParams();
@@ -55,7 +55,6 @@ export default function Navbar({user}:UserMenuProps) {
             <div className="flex items-center justify-between gap-2">
                 <nav className="flex items-center gap-6 flex-1 relative">
                     <Link href='/'><Image src="/logo.svg" alt="Logo" width={91} height={34}/></Link>
-
 
 
 

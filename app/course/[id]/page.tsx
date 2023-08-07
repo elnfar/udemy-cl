@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma"
 import VideoComponent from "./videos"
 import Induvidual from "../component"
 import myUser from "@/app/actions/getUser"
+import Image from "next/image";
 
 
 
@@ -19,6 +20,8 @@ export default async function SingleCourse({params}:{params:{id:string}}) {
     },
 })
 
+  
+console.log(courses?.videos);
 
  
   return (
@@ -43,11 +46,15 @@ export default async function SingleCourse({params}:{params:{id:string}}) {
 
 
               <div className=" flex flex-col">
-                <div className="border">
+                {/* <div className="border">
                     {courses?.videos.map((item) => (
                        <VideoComponent url={item}/>
                     ))}
-                 </div>
+                 </div> */}
+
+                      {courses?.images.map((item) => (
+                        <Image width={400} height={300} className="object-cover border-white border-4" src={item} alt="" />
+                      ))}
 
 
                     <Induvidual
