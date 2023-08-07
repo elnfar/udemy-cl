@@ -21,8 +21,6 @@ export default async function SingleCourse({params}:{params:{id:string}}) {
 })
 
   
-console.log(courses?.videos);
-
  
   return (
     <div>

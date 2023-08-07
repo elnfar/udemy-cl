@@ -126,9 +126,9 @@ export default function NewCourse() {
     fileKey: string;
 }[]>([])
 
-  let amount = 0
-  const [container,setContainer] = useState(amount)
-
+let amount = 0;
+const [container, setContainer] = useState<number>(amount);
+const [containerArr, setContainerArr] = useState<number[]>([]);
 
     const [isLoading, setIsLoading] = useState(false)
     const [isImageUploaded,setIsImageUploaded] = useState(true)
@@ -146,6 +146,13 @@ export default function NewCourse() {
     const onBack = () => {
         setSteps((value) => value - 1)
     }
+
+    const handleButtonClick = () => {
+      // Append container to containerArr
+      setContainerArr(prevArr => [...prevArr, container]);
+    }
+    
+    
 
 
 
@@ -354,8 +361,7 @@ return (
                 
 
 
-                <p>Add your videos or content:</p>
-
+                <p>Lecture {container}</p>
 
                 <div className='w-full'>
 
@@ -389,7 +395,9 @@ return (
             
                 
 
-                {[...Array(container)].map((_, index) => (
+                {containerArr.map((item, index) => (
+                  <>
+                  <h1>Lecture {index + 1}</h1>
                         <UploadButton
                         endpoint="imageUploader"
                         onClientUploadComplete={(res) => {
@@ -415,40 +423,12 @@ return (
                           alert(`ERROR! ${error.message}`);
                         }}
                       />
-
+        </>
       ))}
 
-<button onClick={() => setContainer(prev => prev+1)}>Add</button>
+            <button onClick={handleButtonClick}>Click Me</button>
 
-
-                {/* <UploadButton
-                endpoint="imageUploader"
-                onClientUploadComplete={(res) => {
-                  // Do something with the response
-                  if(res) {
-                    setVideo(prev => [...prev,...res])
-
-                    setState(prevState => ({
-                      ...prevState,
-                      videos: [...prevState.videos, ...res]
-                    }));
-
-                    const json = JSON.stringify(res);
-                    console.log(json);
-                    console.log(video);
-                    
-                  }
-                  console.log("Files: ", res);
-                  setIsVideoUploaded(false)
-                }}
-                onUploadError={(error: Error) => {
-                  // Do something with the error.
-                  alert(`ERROR! ${error.message}`);
-                }}
-              />
- */}
-
-  
+      
               {!isVideoUploaded && !isImageUploaded &&  (
               <Button disabled={isLoading} onClick={onSubmit} type='button'>Next</Button>
               )}

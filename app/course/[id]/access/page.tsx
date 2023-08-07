@@ -9,30 +9,30 @@ export default async  function page({params}:{params:{id:string}}) {
             id: params.id
         }
     })
-
-    
-    
-  return (
-    <div className='flex'>
-
-        <div className='w-full'>
-               <VideoComponent url={course?.videos[0]} big/>
-        </div>
+        console.log(course?.videos);
         
+  return (
+    <div>
 
+      <div className='flex'>
 
+        <div>
 
-        <div className='w-[500px] space-y-4'>
-            <div className='border-2 border-purple-400 bg-neutral-300 py-4'>
-                <button>Content</button>
-            </div>
+              <VideoComponent url={course?.videos[0]} big/>
 
-            <div className='border-2 bg-neutral-300 py-4'>
-                <button>Content 2</button>
-            </div>
         </div>
 
 
+        <div className='w-[444px] flex flex-col'>
+          {course?.videos.map((_,index) => (
+              <button className='py-6 bg-neutral-300 border-2 px-2 w-full text-start'>
+                  Content {index+1}
+              </button>
+          ))}
+        </div>
+
+
+        </div>
     </div>
   )
 }
