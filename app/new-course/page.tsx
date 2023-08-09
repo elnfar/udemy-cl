@@ -1,5 +1,4 @@
-import NewCourse from '../../components/(components)/create-course-form'
-export const dynamic = 'force-dynamic' 
+import NewCourse from '../../components/create-course/create-course-form'
 
 export default async function page() {
 

@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma"
 import myUser from "../actions/getUser"
-import TeachOnUdemy from "../../components/(components)/teach-udemy";
+import TeachOnUdemy from "../../components/create-course/teach-udemy";
+import getCoursesForCurrentUser from "../actions/getCurrentUserCourses";
 
 
 export const dynamic = 'force-dynamic' 
@@ -9,13 +10,7 @@ export default async function MyCourses() {
 
     const user = await myUser();
 
-    const mycourses = await prisma.course.findMany({
-        where: {
-            userId:user?.id
-        },
-    })
-
-
+    const mycourses = await getCoursesForCurrentUser();
 
   return (
     <div>
@@ -25,6 +20,7 @@ export default async function MyCourses() {
         
         {mycourses.map((item) => (
             <TeachOnUdemy 
+            item={item}
             title={item.title}
             option={item.option}
             id={item.id}

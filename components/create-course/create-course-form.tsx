@@ -126,7 +126,7 @@ export default function NewCourse() {
     fileKey: string;
 }[]>([])
 
-let amount = 0;
+let amount = 1;
 const [container, setContainer] = useState<number>(amount);
 const [containerArr, setContainerArr] = useState<number[]>([]);
 
@@ -160,29 +160,24 @@ const [containerArr, setContainerArr] = useState<number[]>([]);
         if(steps !== STEPS.CONTENT) {
             return onNext()
         }
-        console.log(state);
         setIsLoading(true)
         axios.post('/api/create-course', {
           ...state,
           videos:video,
           images:image
         })
-      
-        
         
         .then(() => {
           toast.success('Course created successfully')
-          router.push('/teach-on-udemy')
+          router.push('/')
         })
         .catch((err) => {
           throw new Error(err)
         })
         .finally(() => {
             setIsLoading(false)
-            console.log(state);
      
         })
-        console.log(state);
     }
 
     function handleChange(event: ChangeEvent<HTMLInputElement>) {
@@ -369,6 +364,7 @@ return (
                     endpoint="imageUploader"
                     onClientUploadComplete={(res) => {
                       // Do something with the response
+                      setIsLoading(true)
                       if(res) {
                         setVideo(prev => [...prev,...res])
 
@@ -380,6 +376,8 @@ return (
                         const json = JSON.stringify(res);
                         console.log(json);
                         console.log(video);
+
+                        setIsLoading(false)
                         
                       }
                       console.log("Files: ", res);
@@ -402,6 +400,7 @@ return (
                         endpoint="imageUploader"
                         onClientUploadComplete={(res) => {
                           // Do something with the response
+                          setIsLoading(true)
                           if(res) {
                             setVideo(prev => [...prev,...res])
 
@@ -413,7 +412,8 @@ return (
                             const json = JSON.stringify(res);
                             console.log(json);
                             console.log(video);
-                            
+                            setIsLoading(false)
+
                           }
                           console.log("Files: ", res);
                           setIsVideoUploaded(false)
@@ -426,10 +426,10 @@ return (
         </>
       ))}
 
-            <button onClick={handleButtonClick}>Click Me</button>
+            <button onClick={handleButtonClick}>Add another video</button>
 
       
-              {!isVideoUploaded && !isImageUploaded &&  (
+              {!isVideoUploaded && !isImageUploaded && !isLoading &&  (
               <Button disabled={isLoading} onClick={onSubmit} type='button'>Next</Button>
               )}
               <Button onClick={onBack} type='button'>Back</Button>

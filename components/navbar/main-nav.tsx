@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import qs from 'query-string'
 import {ShoppingCartIcon} from 'lucide-react'
 import Image from "next/image";
+import { ToggleTheme } from "../toggle-theme";
 
 interface UserMenuProps {
     user:User | null;
@@ -18,11 +19,8 @@ export default function Navbar({user}:UserMenuProps) {
 
     const [userMenuOpen,setUserMenuOpen] = useState(false)
     const [searchQuery,setSearchQuery] = useState('')
-    console.log(user);
-    
-    
-    const router = useRouter();
 
+    const router = useRouter();
     const params = useSearchParams();
 
     const closeUserMenu = () => {
@@ -46,15 +44,15 @@ export default function Navbar({user}:UserMenuProps) {
             url:'/',
             query: updatedQuery
         }, {skipNull:true})
-        router.push(`/search/${url}`)
+        router.push(`/${url}`)
     }
 
   return (
-    <div className="shadow-xl bg-white z-[99999] sticky">
+    <div className=" border-b-2">
         <div className="p-3 px-4">
             <div className="flex items-center justify-between gap-2">
                 <nav className="flex items-center gap-6 flex-1 relative">
-                    <Link href='/'><Image src="/logo.svg" alt="Logo" width={91} height={34}/></Link>
+                    <Link href='/'><h1 className="text-[1.4rem]">ILearn</h1></Link>
 
 
 
@@ -71,12 +69,9 @@ export default function Navbar({user}:UserMenuProps) {
 
 
                 <div className="items-center gap-4 text-[.8rem] px-2 hidden lg:flex">
+                    <ToggleTheme/>
                     <div>
-                        <Link href="#">Udemy Business</Link>
-                    </div>
-
-                    <div>
-                        <a href={user ?  "/teach-on-udemy" : '/login'}>Teach on Udemy</a>
+                        <a href={user ?  "/new-course" : '/login'}>Teach on ILearn</a>
                     </div>
 
                     <div className="relative">

@@ -30,6 +30,8 @@
     "next": "13.4.10",
     "next-auth": "^4.22.1",
     "next-cloudinary": "^4.15.0",
+    "next-theme": "^0.1.5",
+    "next-themes": "^0.2.1",
     "postcss": "8.4.26",
     "prisma": "^5.0.0",
     "query-string": "^8.1.0",

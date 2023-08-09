@@ -4,7 +4,6 @@
 import useBasket from "@/hooks/useBasket"
 import { Button } from "@/components/ui/button"
 import { User } from "@prisma/client"
-import { useRouter } from "next/navigation"
 
 
 interface Props {

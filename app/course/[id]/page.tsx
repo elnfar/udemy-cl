@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma"
-import VideoComponent from "./videos"
+
 import Induvidual from "../component"
 import myUser from "@/app/actions/getUser"
 import Image from "next/image";
@@ -61,11 +61,7 @@ export default async function SingleCourse({params}:{params:{id:string}}) {
                     currentUser={user}
                     />
                     
-                 {/* </form> */}
 
-                 {/* <form action={createPortalSession}>
-                    <Button type="submit">Manage Subscription</Button>
-                 </form> */}
                 </div>
 
 

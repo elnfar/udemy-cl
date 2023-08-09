@@ -54,16 +54,6 @@ export default async function UdemyPlus() {
 
   
       }) 
-
- 
-      
- 
-  
-
-      console.log('success');
-      
-  
-      console.log(session);
       redirect(session.url || '')
 
       }
@@ -97,7 +87,8 @@ export default async function UdemyPlus() {
 
   return (
     <div>
-      <h1>Manage your subscription</h1>
+                  <h1>Manage your subscription</h1>
+
                          <form action={user?.plan === "PRO" ? createPortalSession : createCheckoutSession} className="py-2">
 
                                     <input type="hidden" name="lookup_key" value="monthly-pro" />

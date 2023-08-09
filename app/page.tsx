@@ -1,38 +1,23 @@
-import { prisma } from "@/lib/prisma";
-import TeachOnUdemy from "../components/(components)/teach-udemy";
-import SliderMain from "./home-slider";
-import myUser from "./actions/getUser";
+import SingleCourseView from "../components/create-course/teach-udemy";
+import getAllCourses from "./actions/getAllCourses";
 
 
-const images = [
-  "/a.jpg",
-  "/b.jpg",
-];
-
-export const dynamic = 'force-dynamic' 
+interface HomeProps {
+  searchParams:string
+}
 
 
-export default async function Home() {
-
-  const user = await myUser();
+export default async function Home({searchParams}:HomeProps) {
 
 
-
-    const courses = await prisma.course.findMany({
-       where: {
-        userId:user?.id
-       },
-    })
-
-       
+  const courses = await getAllCourses(searchParams);
     
     
   return (
     <main>
-      <SliderMain images={images}/>
-      <div className="flex items-center flex-wrap">
+      <div className="grid grid-cols-3 gap-3 container py-12">
       {courses.map((item) => (
-        <TeachOnUdemy id={item.id} key={item.id} item={item} title={item.title} option={item.option} />
+        <SingleCourseView id={item.id} key={item.id} item={item} title={item.title} option={item.option} />
       ))}
       </div>  
     </main>
