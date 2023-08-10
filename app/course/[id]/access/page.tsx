@@ -17,8 +17,11 @@ export default async  function page({params}:{params:{id:string}}) {
         return "No course under this id and you cant access it!"
       }
 
+      
 
-        const mappedVideos = course?.videos || []; 
+        const mappedVideos = course?.videos; 
+        console.log(mappedVideos);
+        
         const allVideosLength = course?.videos.length
 
 
