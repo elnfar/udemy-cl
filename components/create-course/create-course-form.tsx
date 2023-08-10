@@ -135,7 +135,6 @@ const [containerArr, setContainerArr] = useState<number[]>([]);
     const [isVideoUploaded,setIsVideoUploaded] = useState(true)
 
     const [steps,setSteps] = useState(STEPS.OPTION)
-    const [error, updateError] = useState();
 
     const router = useRouter();
 
@@ -148,12 +147,10 @@ const [containerArr, setContainerArr] = useState<number[]>([]);
     }
 
     const handleButtonClick = () => {
-      // Append container to containerArr
       setContainerArr(prevArr => [...prevArr, container]);
     }
     
     
-
 
 
     const onSubmit = () => {
@@ -214,10 +211,10 @@ const [containerArr, setContainerArr] = useState<number[]>([]);
   
 return (
   <>
-  <div className='flex items-center space-x-8 w-full py-4 bg-purple-600 text-white uppercase text-md font-bold justify-center'>
+  <div className='flex items-center space-x-4 w-full py-4 text-white uppercase text-md font-bold justify-center'>
       {links.map((item) => (
         <span key={item.name} className={`flex w-[200px] items-center gap-2 cursor-pointer`}>
-           <span className={`text-sm`} onClick={() => setSteps(item.step)}>{item.name}</span>
+           <span className={` text-[12px]`} onClick={() => setSteps(item.step)}>{item.name}</span>
            <Circle color="#ffffff" strokeWidth={2} className={`rounded-full ${steps === item.step ? 'bg-green-400' : ''}`}/>
         </span>
       ))}
@@ -246,7 +243,7 @@ return (
                 <div className='flex items-center flex-col gap-4'>
                   <div className='space-y-4'>
                     <h1 className='text-3xl'>Enter the title of your course</h1>
-                    <Input value={state.title} placeholder='Javascript course e.g' id='name' name='title' type='text' onChange={handleChange} className='h-12 w-[800px]'/> 
+                    <Input value={state.title} placeholder='Javascript course e.g' id='name' name='title' type='text' onChange={handleChange} className='h-12 w-[800px] text-black'/> 
                   </div>
 
                     <div className='flex flex-col gap-2 w-full'>
@@ -262,7 +259,7 @@ return (
                 <div className='flex items-center flex-col gap-4'>
                   <div className='space-y-4'>
                     <h1 className='text-3xl'>Enter the description of your course</h1>
-                    <Input value={state.description} placeholder='Learn typescript from scratch 2023' id='description' name='description' type='text' onChange={handleChange} className='h-12 w-[800px]'/> 
+                    <Input value={state.description} placeholder='Learn typescript from scratch 2023' id='description' name='description' type='text' onChange={handleChange} className='h-12 p-10 w-[800px] text-black'/> 
                   </div>
 
                     <div className='flex flex-col gap-2 w-full'>
@@ -272,6 +269,30 @@ return (
                 </div>
             </div>
     )} 
+
+
+
+{steps === STEPS.LANGUAGE && ( 
+
+<div className='flex flex-col items-center py-8 gap-2'>
+    <div className='grid grid-cols-3 gap-2'>
+    {languages.map(({label}) => (
+        <Box label={label} key={label} selected={state.language === label} onClick={() => {
+            setState({
+                ...state,
+                language:label
+
+            })
+        }}/>
+    ))}
+    </div>
+    <div className='flex gap-2'>
+        <Button onClick={onBack} type='button'>Back</Button>
+        <Button onClick={onSubmit} type='button' className='bg-purple-600'>Next</Button>
+    </div>
+   
+</div>
+)}
 
 
     {steps === STEPS.CATEGORY && ( 
@@ -296,27 +317,6 @@ return (
             </div>
     )}
 
-{steps === STEPS.LANGUAGE && ( 
-
-<div className='flex flex-col items-center py-8 gap-2'>
-    <div className='grid grid-cols-3 gap-2'>
-    {languages.map(({label}) => (
-        <Box label={label} key={label} selected={state.language === label} onClick={() => {
-            setState({
-                ...state,
-                language:label
-
-            })
-        }}/>
-    ))}
-    </div>
-    <div className='flex gap-2'>
-        <Button onClick={onBack} type='button'>Back</Button>
-        <Button onClick={onSubmit} type='button' className='bg-purple-600'>Next</Button>
-    </div>
-   
-</div>
-)}
 
     
     {steps === STEPS.CONTENT && (
@@ -356,46 +356,11 @@ return (
                 
 
 
-                <p>Lecture {container}</p>
-
-                <div className='w-full'>
-
-                    <UploadButton
-                    endpoint="imageUploader"
-                    onClientUploadComplete={(res) => {
-                      // Do something with the response
-                      setIsLoading(true)
-                      if(res) {
-                        setVideo(prev => [...prev,...res])
-
-                        setState(prevState => ({
-                          ...prevState,
-                          videos: [...prevState.videos, ...res]
-                        }));
-
-                        const json = JSON.stringify(res);
-                        console.log(json);
-                        console.log(video);
-
-                        setIsLoading(false)
-                        
-                      }
-                      console.log("Files: ", res);
-                      setIsVideoUploaded(false)
-                    }}
-                    onUploadError={(error: Error) => {
-                      // Do something with the error.
-                      alert(`ERROR! ${error.message}`);
-                    }}
-
-                  />
-                </div>
-            
-                
-
-                {containerArr.map((item, index) => (
+                {containerArr.map((_,index) => (
+                  
                   <>
                   <h1>Lecture {index + 1}</h1>
+
                         <UploadButton
                         endpoint="imageUploader"
                         onClientUploadComplete={(res) => {
@@ -426,8 +391,9 @@ return (
         </>
       ))}
 
-            <button onClick={handleButtonClick}>Add another video</button>
-
+            <div className='my-4'>
+            <Button variant="secondary" className='py-2' onClick={handleButtonClick}>Add Video</Button>
+            </div>
       
               {!isVideoUploaded && !isImageUploaded && !isLoading &&  (
               <Button disabled={isLoading} onClick={onSubmit} type='button'>Next</Button>

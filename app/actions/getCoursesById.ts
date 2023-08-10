@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 
 interface IParams {
-    courseId?:string
+    courseId:string
 }
 
 
@@ -15,25 +15,17 @@ export default async function getCourseById(
             where: {
                 id:courseId
             },
-            include: {
-                user:true
-            }
         });
 
         if(!courseId) {
             return null
         }
 
-
-        return {
-            ...course,
-            createdAt:course?.createdAt.toString(),
-            user: {
-                ...course?.user,
-                createdAt: course?.user?.createdAt.toString(),
-                updatedAt: course?.user?.updatedAt.toString(),
-            }
+        if(!course) {
+            return null
         }
+
+      return course
         
     }catch(error:any) {
         throw new Error(error);

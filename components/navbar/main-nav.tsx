@@ -1,6 +1,6 @@
 'use client'
 
-import { Course, User } from "@prisma/client";
+import {  User } from "@prisma/client";
 import Link from "next/link"
 import { FormEvent, useState } from "react";
 import MainMenu from "./main-menu";
@@ -61,7 +61,7 @@ export default function Navbar({user}:UserMenuProps) {
                         placeholder="Search for anything ..."
                         onChange={(e) => setSearchQuery(e.target.value)}
                         className="
-                        w-full p-3 font-light bg-white rounded-full border-black border-[1px] outline-none
+                        w-full p-3 font-light shadow-sm border-b-[2px] outline-none bg-transparent
                         "
                         />
                     </form>
@@ -104,7 +104,7 @@ export default function Navbar({user}:UserMenuProps) {
 
 
                     {userMenuOpen && (
-                        <div className="absolute bottom-0 top-20 right-20">
+                        <div className="absolute bottom-0 top-20 right-20 z-50">
                             <MainMenu
                                 currentUser={user}
                                 closeUserMenu={closeUserMenu}
