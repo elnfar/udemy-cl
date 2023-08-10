@@ -71,7 +71,7 @@ export default function Navbar({user}:UserMenuProps) {
                 <div className="items-center gap-4 text-[.8rem] px-2 hidden lg:flex">
                     <ToggleTheme/>
                     <div>
-                        <a href={user ?  "/new-course" : '/login'}>Teach on ILearn</a>
+                        <a href={user ?  "/new" : '/register'}>Teach on ILearn</a>
                     </div>
 
                     <div className="relative">
@@ -85,15 +85,9 @@ export default function Navbar({user}:UserMenuProps) {
 
                 <div className="flex items-center gap-3">
                     {!user && (
-                        <>
-                            <div>
-                              <Link href='/api/auth/signin' className='py-2 px-6 border-black border-[1px]'>Login</Link>
-                            </div>
-
                             <div>
                                <Link href='/api/auth/signin' className='py-2 px-6 bg-black text-white border-[1px] border-black '>Sign up</Link>
                             </div>
-                        </>
                     )}
 
                     {user && (

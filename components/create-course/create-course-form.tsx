@@ -5,13 +5,16 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
 import axios from 'axios'
-import { Circle, CircleDashed, Dot, DotIcon, Text, VideoIcon } from 'lucide-react'
-import {useParams, useRouter} from 'next/navigation'
-import { ChangeEvent, useEffect, useState } from 'react'
+import { Circle,Text, VideoIcon } from 'lucide-react'
+import {useRouter} from 'next/navigation'
+import { ChangeEvent, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import "@uploadthing/react/styles.css";
-
 import { UploadButton } from "../../lib/uploadthings";
+
+
+
+
 
 
 
@@ -215,7 +218,7 @@ return (
       {links.map((item) => (
         <span key={item.name} className={`flex w-[200px] items-center gap-2 cursor-pointer`}>
            <span className={` text-[12px]`} onClick={() => setSteps(item.step)}>{item.name}</span>
-           <Circle color="#ffffff" strokeWidth={2} className={`rounded-full ${steps === item.step ? 'bg-green-400' : ''}`}/>
+           <Circle color="#fff" strokeWidth={2} className={`rounded-full ${steps === item.step ? 'bg-green-400' : ''}`}/>
         </span>
       ))}
   </div>
